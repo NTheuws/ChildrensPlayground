@@ -173,9 +173,9 @@ public class JumpDetection : MonoBehaviour
             {
                 lr.SetPosition(0, jointObj.localPosition);
                 lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value, body));
-#pragma warning disable CS0618 // Type or member is obsolete
+                #pragma warning disable CS0618 // Type or member is obsolete
                 lr.SetColors(GetColorForState(sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
-#pragma warning restore CS0618 // Type or member is obsolete
+                #pragma warning restore CS0618 // Type or member is obsolete
             }
             else
             {
@@ -205,7 +205,7 @@ public class JumpDetection : MonoBehaviour
         if (joint.JointType == Kinect.JointType.SpineShoulder)
         {
             // Player 1.
-            if (PlayerIDs[0] != 0)
+            if (PlayerIDs[0] != 0 && player1 != null)
             {
                 if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
                 {
@@ -223,7 +223,7 @@ public class JumpDetection : MonoBehaviour
                 }
             }
             // Player 2.
-            if (PlayerIDs[1] != 0)
+            if (PlayerIDs[1] != 0 && player2 != null)
             {
                 // Initializing player
                 if (body.TrackingId == PlayerIDs[1] && !_Initialized2)
@@ -297,9 +297,13 @@ public class JumpDetection : MonoBehaviour
                 {
                     case 0:
                         player1.RemovePlayer();
+                        player1 = null;
+                        _Initialized1 = false;
                         break;
                     case 1:
                         player2.RemovePlayer();
+                        player2 = null;
+                        _Initialized2 = false;
                         break;
                 }
             }
