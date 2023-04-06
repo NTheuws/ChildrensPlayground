@@ -5,6 +5,7 @@ using Kinect = Windows.Kinect;
 using Windows.Kinect;
 using System.Threading;
 using System;
+using Unity.VisualScripting;
 
 public class JumpDetection : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class JumpDetection : MonoBehaviour
 
     private List<ulong> _PlayerIds = new List<ulong>();
     private ulong[] PlayerIDs = { 0, 0, 0, 0 };
-    
+
 
     private Dictionary<Kinect.JointType, Kinect.JointType> _BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
     {
@@ -101,7 +102,7 @@ public class JumpDetection : MonoBehaviour
             {
                 Destroy(_Bodies[trackingId]);
                 _Bodies.Remove(trackingId);
-                
+
                 // Remove the player and character.
                 RemoveFromSlot(trackingId);
             }
@@ -127,22 +128,22 @@ public class JumpDetection : MonoBehaviour
 
     private GameObject CreateBodyObject(ulong id)
     {
-        
+
         GameObject body = new GameObject("Body:" + id);
 
         // Add ID into the array.
         InsertIntoFirstEmptySlot(id);
-        
+
         for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
         {
             GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            
+
             LineRenderer lr = jointObj.AddComponent<LineRenderer>();
             lr.material = BoneMaterial;
-            #pragma warning disable CS0618 // Type or member is obsolete
-            lr.SetVertexCount(2);            
+#pragma warning disable CS0618 // Type or member is obsolete
+            lr.SetVertexCount(2);
             lr.SetWidth(0f, 0f);
-            #pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning restore CS0618 // Type or member is obsolete
 
             jointObj.transform.localScale = new Vector3(0f, 0f, 0f);
             jointObj.name = jt.ToString();
@@ -172,9 +173,9 @@ public class JumpDetection : MonoBehaviour
             {
                 lr.SetPosition(0, jointObj.localPosition);
                 lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value, body));
-                #pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
                 lr.SetColors(GetColorForState(sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
-                #pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             else
             {
@@ -182,7 +183,6 @@ public class JumpDetection : MonoBehaviour
             }
         }
     }
-
     private static Color GetColorForState(Kinect.TrackingState state)
     {
         switch (state)
@@ -197,13 +197,14 @@ public class JumpDetection : MonoBehaviour
                 return Color.black;
         }
     }
-
+    // Get the placement of the joints and detect if a player has jumped or not.
     private Vector3 GetVector3FromJoint(Kinect.Joint joint, Body body)
     {
         Vector3 point = new Vector3(joint.Position.X * 10, joint.Position.Y * 10, joint.Position.Z * 10);
         // If the joint matches the tracked one.
         if (joint.JointType == Kinect.JointType.SpineShoulder)
         {
+            // Player 1.
             if (PlayerIDs[0] != 0)
             {
                 if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
@@ -244,13 +245,23 @@ public class JumpDetection : MonoBehaviour
         return point;
     }
 
+    /* These methods are used to track the skeletons and link them to the correct player.
+     * When spawning in a skeleton it'll have a personal ID linked to it.
+     * This ID will be saved in an array slot which corresponds to a character.
+     */
+
+    // Called when a new skeleton has been detected.
+    // in: val being the skeleton ID
+    //
     private void InsertIntoFirstEmptySlot(ulong val)
     {
         int index = 0;
         foreach (ulong id in PlayerIDs)
         {
+            // Check for the first spot of the array thats emtpy.
             if (id == 0)
             {
+                // Insert the skeleton's ID into the array.
                 PlayerIDs[index] = val;
                 switch (index)
                 {
@@ -260,6 +271,7 @@ public class JumpDetection : MonoBehaviour
                         obstacle.started = true;
                         break;
                     case 1:
+                        // Spawn p2.
                         player2 = (PlayerBehaviour)Instantiate(PlayerPrefab);
                         break;
                 }
@@ -269,14 +281,18 @@ public class JumpDetection : MonoBehaviour
         }
     }
 
+    // Called when a skeleton is no longer detected.
+    // IN: val being the skeletons ID
     private void RemoveFromSlot(ulong val)
     {
         int index = 0;
         foreach (ulong id in PlayerIDs)
         {
+            // If the ID matches the slot of the array.
             if (id == val)
             {
                 PlayerIDs[index] = 0;
+                // Remove the associated player.
                 switch (index)
                 {
                     case 0:
