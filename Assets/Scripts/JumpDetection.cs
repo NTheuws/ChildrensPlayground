@@ -140,10 +140,10 @@ public class JumpDetection : MonoBehaviour
 
             LineRenderer lr = jointObj.AddComponent<LineRenderer>();
             lr.material = BoneMaterial;
-#pragma warning disable CS0618 // Type or member is obsolete
+            #pragma warning disable CS0618 // Type or member is obsolete
             lr.SetVertexCount(2);
             lr.SetWidth(0f, 0f);
-#pragma warning restore CS0618 // Type or member is obsolete
+            #pragma warning restore CS0618 // Type or member is obsolete
 
             jointObj.transform.localScale = new Vector3(0f, 0f, 0f);
             jointObj.name = jt.ToString();
