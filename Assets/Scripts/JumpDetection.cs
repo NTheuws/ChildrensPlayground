@@ -142,10 +142,12 @@ public class JumpDetection : MonoBehaviour
             lr.material = BoneMaterial;
             #pragma warning disable CS0618 // Type or member is obsolete
             lr.SetVertexCount(2);
-            lr.SetWidth(0f, 0f);
+            //lr.SetWidth(0f, 0f);
+            lr.SetWidth(0.05f, 0.05f);
             #pragma warning restore CS0618 // Type or member is obsolete
 
-            jointObj.transform.localScale = new Vector3(0f, 0f, 0f);
+            //jointObj.transform.localScale = new Vector3(0f, 0f, 0f);
+            jointObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             jointObj.name = jt.ToString();
             jointObj.transform.parent = body.transform;
         }
@@ -213,14 +215,37 @@ public class JumpDetection : MonoBehaviour
                     restPoint1 = point;
                     _Initialized1 = true;
                 }
-                // Player jumped.
+                // Vertical movement.
+                // jump.
                 if (point.y > restPoint1.y + 1)
                 {
-                    if (body.TrackingId == PlayerIDs[0])
-                    {
-                        player1.PlayerJump();
-                    }
+                    player1.PlayerJump();
                 }
+                // Crouch.
+                else if(point.y < restPoint1.y - 1.5)
+                {
+                    player1.PlayerCrouch();
+                }
+                // Horizontal movement.
+                // Moving left.
+                if (point.x < restPoint1.x - 1)
+                {
+                    player1.isMovingLeft = true;
+                    player1.isMovingRight = false;
+                }
+                // Moving right.
+                else if (point.x > restPoint1.x + 1)
+                {
+                    player1.isMovingRight = true;
+                    player1.isMovingLeft = false;
+                }
+                // Staying still.
+                else
+                {
+                    player1.isMovingLeft = false;
+                    player1.isMovingRight = false;
+                }
+
             }
             // Player 2.
             if (PlayerIDs[1] != 0 && player2 != null)

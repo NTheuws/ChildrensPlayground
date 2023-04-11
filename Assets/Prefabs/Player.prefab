@@ -107,7 +107,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &704857514162836559
 BoxCollider2D:
@@ -168,3 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e8defad00697845ae38c3b982f7d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floor1: {fileID: 0}
+  isGrounded: 1
+  isMovingRight: 0
+  isMovingLeft: 0
