@@ -23,7 +23,7 @@ public class MovingObstacle : MonoBehaviour
             // Move the obstacle.
             transform.position += Vector3.left * speed * Time.deltaTime;
             // When OB move it back to the start.
-            if (transform.position.x < -10f)
+            if (transform.position.x < -14f)
             {
                 transform.position = startPos;
             }
