@@ -19,13 +19,17 @@ public class JumpDetection : MonoBehaviour
     private bool _Initialized2 = false;
     public Vector3 restPoint1 = new Vector3(0, 0, 0);
     private Vector3 restPoint2 = new Vector3(0, 0, 0);
-    private PlayerBehaviour player1;
+    public PlayerBehaviour player1;
     private PlayerBehaviour player2;
-    public PlayerBehaviour PlayerPrefab;
+    public PlayerBehaviour playerPrefab;
     public MovingObstacle obstacle;
 
     private List<ulong> _PlayerIds = new List<ulong>();
     private ulong[] PlayerIDs = { 0, 0, 0, 0 };
+
+    public Tutorial tutorial;
+
+    public GameObject tempPlatform;
 
 
     private Dictionary<Kinect.JointType, Kinect.JointType> _BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
@@ -60,6 +64,10 @@ public class JumpDetection : MonoBehaviour
         { Kinect.JointType.Neck, Kinect.JointType.Head },
     };
 
+    private void Start()
+    {
+
+    }
     void Update()
     {
         if (BodySourceManager == null)
@@ -131,7 +139,7 @@ public class JumpDetection : MonoBehaviour
 
         GameObject body = new GameObject("Body:" + id);
 
-        // Add ID into the array.
+        // Add ID into the array and spawn in player.
         InsertIntoFirstEmptySlot(id);
 
         for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
@@ -205,66 +213,106 @@ public class JumpDetection : MonoBehaviour
         Vector3 point = new Vector3(joint.Position.X * 10, joint.Position.Y * 10, joint.Position.Z * 10);
         // If the joint matches the tracked one.
         if (joint.JointType == Kinect.JointType.SpineShoulder)
-        {
-            // Player 1.
-            if (PlayerIDs[0] != 0 && player1 != null)
+        { 
+            // Play turorial if it hasnt been completed.
+            if (tutorial.tutorialOngoing)
             {
-                if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
+                if (PlayerIDs[0] != 0 && player1 != null)
                 {
-                    //Set initial point.
-                    restPoint1 = point;
-                    _Initialized1 = true;
-                }
-                // Vertical movement.
-                // jump.
-                if (point.y > restPoint1.y + 1)
-                {
-                    player1.PlayerJump();
-                }
-                // Crouch.
-                else if(point.y < restPoint1.y - 1.5)
-                {
-                    player1.PlayerCrouch();
-                }
-                // Horizontal movement.
-                // Moving left.
-                if (point.x < restPoint1.x - 1)
-                {
-                    player1.isMovingLeft = true;
-                    player1.isMovingRight = false;
-                }
-                // Moving right.
-                else if (point.x > restPoint1.x + 1)
-                {
-                    player1.isMovingRight = true;
-                    player1.isMovingLeft = false;
-                }
-                // Staying still.
-                else
-                {
-                    player1.isMovingLeft = false;
-                    player1.isMovingRight = false;
-                }
-
-            }
-            // Player 2.
-            if (PlayerIDs[1] != 0 && player2 != null)
-            {
-                // Initializing player
-                if (body.TrackingId == PlayerIDs[1] && !_Initialized2)
-                {
-                    //Set initial point
-                    restPoint2 = point;
-                    _Initialized2 = true;
-                }
-                // Player jumped
-                if (point.y > restPoint2.y + 1)
-                {
-                    if (body.TrackingId == PlayerIDs[1])
+                    if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
                     {
-                        player2.PlayerJump();
+                        //Set initial point.
+                        restPoint1 = point;
+                        _Initialized1 = true;
+                    }
+                    // Vertical movement.
+                    // jump.
+                    if (point.y > restPoint1.y + 1)
+                    {
+                        tutorial.tutorialSteps(player1, 1, Actions.PlayerActions.Jump);
+                    }
+                    // Crouch.
+                    else if (point.y < restPoint1.y - 1.5)
+                    {
+                        tutorial.tutorialSteps(player1, 1, Actions.PlayerActions.Crouch);
+                    }
+                    // Horizontal movement.
+                    // Moving left.
+                    if (point.x < restPoint1.x - 1)
+                    {
+                        tutorial.tutorialSteps(player1, 1, Actions.PlayerActions.Left);
+                    }
+                    // Moving right.
+                    else if (point.x > restPoint1.x + 1)
+                    {
+                        tutorial.tutorialSteps(player1, 1, Actions.PlayerActions.Right);
                     }
                 }
+            } 
+            // Play game while the tutorial is over.
+       
+            else if(!tutorial.tutorialOngoing)
+            //{
+                // Player 1.
+                if (PlayerIDs[0] != 0 && player1 != null)
+                {
+                    if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
+                    {
+                        //Set initial point.
+                        restPoint1 = point;
+                        _Initialized1 = true;
+                    }
+                    // Vertical movement.
+                    // jump.
+                    if (point.y > restPoint1.y + 1)
+                    {
+                        player1.PlayerJump();
+                    }
+                    // Crouch.
+                    else if (point.y < restPoint1.y - 1.5)
+                    {
+                        player1.PlayerCrouch();
+                    }
+                    // Horizontal movement.
+                    // Moving left.
+                    if (point.x < restPoint1.x - 1)
+                    {
+                        player1.isMovingLeft = true;
+                        player1.isMovingRight = false;
+                    }
+                    // Moving right.
+                    else if (point.x > restPoint1.x + 1)
+                    {
+                        player1.isMovingRight = true;
+                        player1.isMovingLeft = false;
+                    }
+                    // Staying still.
+                    else
+                    {
+                        player1.isMovingLeft = false;
+                        player1.isMovingRight = false;
+                    }
+
+                }
+                // Player 2.
+                if (PlayerIDs[1] != 0 && player2 != null)
+                {
+                    // Initializing player
+                    if (body.TrackingId == PlayerIDs[1] && !_Initialized2)
+                    {
+                        //Set initial point
+                        restPoint2 = point;
+                        _Initialized2 = true;
+                    }
+                    // Player jumped
+                    if (point.y > restPoint2.y + 1)
+                    {
+                        if (body.TrackingId == PlayerIDs[1])
+                        {
+                            player2.PlayerJump();
+                        }
+                    }
+                //}
             }
         }
         return point;
@@ -292,12 +340,14 @@ public class JumpDetection : MonoBehaviour
                 {
                     case 0:
                         // Spawn p1 and start the game
-                        player1 = (PlayerBehaviour)Instantiate(PlayerPrefab);
-                        obstacle.started = true;
+                        player1 = (PlayerBehaviour)Instantiate(playerPrefab);
+                        tutorial.totalPlayers++;
+                        //obstacle.started = true;
                         break;
                     case 1:
                         // Spawn p2.
-                        player2 = (PlayerBehaviour)Instantiate(PlayerPrefab);
+                        player2 = (PlayerBehaviour)Instantiate(playerPrefab);
+                        tutorial.totalPlayers++;
                         break;
                 }
                 return;

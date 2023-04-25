@@ -313,6 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 781315261}
   - component: {fileID: 781315260}
+  - component: {fileID: 781315262}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -335,8 +336,11 @@ MonoBehaviour:
   BoneMaterial: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
   BodySourceManager: {fileID: 1412655521}
   restPoint1: {x: 0, y: 0, z: 0}
-  PlayerPrefab: {fileID: 704857514162836555, guid: b4f255c57812ba346b0d20820ba6dbda, type: 3}
+  player1: {fileID: 0}
+  playerPrefab: {fileID: 704857514162836555, guid: b4f255c57812ba346b0d20820ba6dbda, type: 3}
   obstacle: {fileID: 1029499627}
+  tutorial: {fileID: 781315262}
+  tempPlatform: {fileID: 1260329513}
 --- !u!4 &781315261
 Transform:
   m_ObjectHideFlags: 0
@@ -352,6 +356,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &781315262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781315259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c72ce01cdafbdc4e82e9282a3753592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialOngoing: 1
+  totalPlayers: 0
 --- !u!1 &1029499621
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,8 +816,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260329513}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -0.5, z: 0}
-  m_LocalScale: {x: 4, y: 8, z: 1}
+  m_LocalPosition: {x: -2.2, y: -0.5, z: 0}
+  m_LocalScale: {x: 7, y: 8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

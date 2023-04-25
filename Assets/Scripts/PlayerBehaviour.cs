@@ -39,11 +39,11 @@ public class PlayerBehaviour : MonoBehaviour
             FloorCollidersToggle(false);
         }
 
-        if (isMovingLeft) 
+        if (isMovingLeft)
         {
             transform.position += transform.right * -horizontalSpeed * Time.deltaTime;
         }
-        else if(isMovingRight)
+        else if (isMovingRight)
         {
             transform.position += transform.right * horizontalSpeed * Time.deltaTime;
         }
@@ -92,5 +92,24 @@ public class PlayerBehaviour : MonoBehaviour
     public void FloorCollidersToggle(bool collide)
     {
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), floor1.GetComponent<Collider2D>(), collide);
+    }
+
+    public void MoveLeft()
+    {
+        StartCoroutine(ExampleCoroutine(true, false));
+    }
+
+    public void MoveRight()
+    {
+        StartCoroutine(ExampleCoroutine(false, true));
+    }
+
+    IEnumerator ExampleCoroutine(bool left, bool right)
+    {
+        isMovingLeft = left;
+        isMovingRight = right;
+        yield return new WaitForSeconds(1);
+        isMovingLeft = false;
+        isMovingRight = false;
     }
 }
