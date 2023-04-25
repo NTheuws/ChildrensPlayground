@@ -27,6 +27,16 @@ public class Tutorial : MonoBehaviour
     // Keeps track of the players that have done the action required to progress to the next step.
     private int[] succeededPlayers = { 0, 0, 0, 0 };
 
+    // Obstacle used for the tutorial.
+    public TutorialObstacle obstaclePrefab;
+    private TutorialObstacle obstacle;
+    private bool spawnedObstacle = false;
+
+    private void Start()
+    {
+        obstacle = Instantiate(obstaclePrefab);
+    }
+
     public void tutorialSteps(PlayerBehaviour player, int playerNumber ,Actions.PlayerActions action)
     {
         bool containsPlayer = false;
@@ -47,7 +57,6 @@ public class Tutorial : MonoBehaviour
                         // Toggle player in array.
                         succeededPlayers[playerNumber - 1] = 1;
                     }
-
                     break;
                 // Move down
                 case 2:
@@ -78,16 +87,46 @@ public class Tutorial : MonoBehaviour
                     break;
                 // Collect coin
                 case 5:
+                    tutorialStep++;
                     break;
                 // Getting hit by obstacle
                 case 6:
+                    obstacle.started = true;
+                    /*
+                    if (!spawnedObstacle)
+                    {
+                        spawnedObstacle = true;
+                        obstacle = Instantiate(obstaclePrefab);
+                    }*/
+                    if (obstacle.hitPlayer)
+                    {
+                        tutorialStep++;
+                    }
                     break;
                 // Dodge obstacle
                 case 7:
+                    if (action == Actions.PlayerActions.Jump)
+                    {
+                        player.PlayerJump();
+                        obstacle.slowedSpeed = 3f;
+                        // Toggle player in array.
+                        succeededPlayers[playerNumber - 1] = 1;
+                    }
+                    if (action == Actions.PlayerActions.Crouch)
+                    {
+                        player.PlayerCrouch();
+                    }
                     break;
             }
             // See if the step has been completed by all players.
             CheckStepSucceeded();
+
+            //Check if the tutorial has ended.
+            if (obstacle.ObstacleDone)
+            {
+                Destroy(obstacle);
+                tutorialOngoing = false;
+            }
         }
     }
 
@@ -104,7 +143,6 @@ public class Tutorial : MonoBehaviour
         {
             tutorialStep++;
         }
-
         // reset array
         succeededPlayers = new int[] { 0, 0, 0, 0 };
     }

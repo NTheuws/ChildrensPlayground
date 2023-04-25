@@ -370,6 +370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialOngoing: 1
   totalPlayers: 0
+  obstaclePrefab: {fileID: -3638960189844118779, guid: 3eb7d5991d9fb41428ff89ccf29e5f10, type: 3}
 --- !u!1 &1029499621
 GameObject:
   m_ObjectHideFlags: 0
