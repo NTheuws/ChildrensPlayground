@@ -9,7 +9,7 @@ public class TutorialObstacle : MonoBehaviour
     private Vector3 startPos;
     public bool started = false;
     public bool hitPlayer = false;
-    private float pausePointX = -2.4f;
+    private float pausePointX = 1.6f;
     public bool ObstacleDone = false;
 
     void Start()
@@ -36,7 +36,7 @@ public class TutorialObstacle : MonoBehaviour
             }
             if (hitPlayer && transform.position.x < pausePointX)
             {
-                speed = slowedSpeed;
+                speed = slowedSpeed;                
             }
         }
     }

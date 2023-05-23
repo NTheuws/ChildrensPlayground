@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Tutorial : MonoBehaviour
@@ -21,111 +24,157 @@ public class Tutorial : MonoBehaviour
     // See if the tutorial has been completed or not.
     public bool tutorialOngoing = true;
     // Tracks which step the tutorial is at.
-    private int tutorialStep = 1;
+    private int tutorialStep = 0;
     // Keeps track of the amount of players.
     public int totalPlayers = 0;
     // Keeps track of the players that have done the action required to progress to the next step.
     private int[] succeededPlayers = { 0, 0, 0, 0 };
-
+    // Instructions for the controls will be shown on a text.
+    public TMP_Text instructionsText;
     // Obstacle used for the tutorial.
     public TutorialObstacle obstaclePrefab;
     private TutorialObstacle obstacle;
-    private bool spawnedObstacle = false;
+    // Points to be collected.
+    public PointBehaviour pointObject;
+    // Score count.
+    public TMP_Text currentScore;
+
+    private bool firstMessage = true;
 
     private void Start()
     {
         obstacle = Instantiate(obstaclePrefab);
+        instructionsText.enabled = false;
     }
 
-    public void tutorialSteps(PlayerBehaviour player, int playerNumber ,Actions.PlayerActions action)
+    private void Update()
     {
-        bool containsPlayer = false;
-        if (succeededPlayers[playerNumber-1] == 1)
+        switch (tutorialStep)
         {
-            containsPlayer = true;
-        }
-
-        if (!containsPlayer)
-        {
-            switch (tutorialStep)
-            {
-                // Jump
-                case 1:
-                    if (action == Actions.PlayerActions.Jump)
-                    {
-                        player.PlayerJump();
-                        // Toggle player in array.
-                        succeededPlayers[playerNumber - 1] = 1;
-                    }
-                    break;
-                // Move down
-                case 2:
-                    if (action == Actions.PlayerActions.Crouch)
-                    {
-                        player.PlayerCrouch();
-                        // Toggle player in array.
-                        succeededPlayers[playerNumber - 1] = 1;
-                    }
-                    break;
-                // Move left
-                case 3:
-                    if (action == Actions.PlayerActions.Left)
-                    {
-                        player.MoveLeft();
-                        // Toggle player in array.
-                        succeededPlayers[playerNumber - 1] = 1;
-                    }
-                    break;
-                // Move right
-                case 4:
-                    if (action == Actions.PlayerActions.Right)
-                    {
-                        player.MoveRight();
-                        // Toggle player in array.
-                        succeededPlayers[playerNumber - 1] = 1;
-                    }
-                    break;
-                // Collect coin
-                case 5:
+            case 1:
+                StartCoroutine(ExampleCoroutine(5));
+                break;
+            case 2:
+                instructionsText.text = "Bukt..";
+                break;
+            case 3:
+                instructionsText.text = "Naar links loopt..";
+                break;
+            case 4:
+                instructionsText.text = "en naar rechts..";
+                break;
+            case 5:
+                currentScore.text = "Punten: 0";
+                instructionsText.text = "Tickets geven je punten.";
+                pointObject.started = true;
+                if (pointObject.hitPlayer)
+                {
+                    currentScore.text = "Punten: 1";
                     tutorialStep++;
-                    break;
-                // Getting hit by obstacle
-                case 6:
-                    obstacle.started = true;
-                    /*
-                    if (!spawnedObstacle)
-                    {
-                        spawnedObstacle = true;
-                        obstacle = Instantiate(obstaclePrefab);
-                    }*/
-                    if (obstacle.hitPlayer)
-                    {
-                        tutorialStep++;
-                    }
-                    break;
-                // Dodge obstacle
-                case 7:
-                    if (action == Actions.PlayerActions.Jump)
-                    {
-                        player.PlayerJump();
-                        obstacle.slowedSpeed = 3f;
-                        // Toggle player in array.
-                        succeededPlayers[playerNumber - 1] = 1;
-                    }
-                    if (action == Actions.PlayerActions.Crouch)
-                    {
-                        player.PlayerCrouch();
-                    }
-                    break;
-            }
-            // See if the step has been completed by all players.
-            CheckStepSucceeded();
+                }
+                break;
+            case 6:
+                instructionsText.text = "Als je geraakt wordt door iets anders \ngaan je punten omlaag.";
+                obstacle.started = true;
 
-            //Check if the tutorial has ended.
-            if (obstacle.ObstacleDone)
+                if (obstacle.hitPlayer)
+                {
+                    currentScore.text = "Punten: 0";
+                    tutorialStep++;
+                    instructionsText.text = "Spring eroverheen!";
+                }
+                break;
+            default:
+                if (!obstacle.hitPlayer)
+                {
+                    instructionsText.text = "";
+                }
+                else
+                {
+                    //instructionsText.text = "Spring eroverheen!";
+                }
+                break;
+        }
+    }
+
+    public void tutorialSteps(PlayerBehaviour player, int playerNumber, Actions.PlayerActions action)
+    {
+        if (tutorialOngoing)
+        {
+            bool containsPlayer = false;
+            if (succeededPlayers[playerNumber - 1] == 1)
             {
-                Destroy(obstacle);
-                tutorialOngoing = false;
+                containsPlayer = true;
+            }
+
+            if (!containsPlayer)
+            {
+                switch (tutorialStep)
+                {
+
+                    // Jump
+                    case 1:
+                        if (action == Actions.PlayerActions.Jump)
+                        {
+                            player.PlayerJump();
+                            // Toggle player in array.
+                            succeededPlayers[playerNumber - 1] = 1;
+                        }
+                        break;
+                    // Move down
+                    case 2:
+                        if (action == Actions.PlayerActions.Crouch)
+                        {
+                            player.PlayerCrouch();
+                            // Toggle player in array.
+                            succeededPlayers[playerNumber - 1] = 1;
+                        }
+                        break;
+                    // Move left
+                    case 3:
+                        if (action == Actions.PlayerActions.Left && player.isGrounded)
+                        {
+                            player.MoveLeft();
+                            // Toggle player in array.
+                            succeededPlayers[playerNumber - 1] = 1;
+                        }
+                        break;
+                    // Move right
+                    case 4:
+                        if (action == Actions.PlayerActions.Right)
+                        {
+                            player.MoveRight();
+                            // Toggle player in array.
+                            succeededPlayers[playerNumber - 1] = 1;
+                        }
+                        break;
+                    // Collect coin
+                    case 5:
+                    // Getting hit by obstacle
+                    case 6:
+                        break;
+                    // Dodge obstacle
+                    case 7:
+                        if (action == Actions.PlayerActions.Jump)
+                        {
+                            instructionsText.text = "";
+                            player.PlayerJump();
+                            obstacle.slowedSpeed = 3f;
+                            // Toggle player in array.
+                            succeededPlayers[playerNumber - 1] = 1;
+                        }
+                        break;
+                }
+                // See if the step has been completed by all players.
+                CheckStepSucceeded();
+
+                //Check if the tutorial has ended.
+                if (obstacle.ObstacleDone)
+                {
+                    instructionsText.enabled = false;
+                    Destroy(obstacle);
+                    tutorialOngoing = false;
+                }
             }
         }
     }
@@ -141,9 +190,35 @@ public class Tutorial : MonoBehaviour
 
         if (val == totalPlayers)
         {
+            // reset array
+            succeededPlayers = new int[] { 0, 0, 0, 0 };
             tutorialStep++;
         }
-        // reset array
-        succeededPlayers = new int[] { 0, 0, 0, 0 };
+
+        if (tutorialStep == 8 || tutorialStep == 7)
+        {
+            instructionsText.text = "";
+        }
+    }
+
+    IEnumerator ExampleCoroutine(int val)
+    {
+        if (firstMessage)
+        {
+            firstMessage = false;
+            instructionsText.text = "Door zelf te bewegen, \nbeweeg je het karakter..";
+            yield return new WaitForSeconds(val);
+            instructionsText.text = "Dus als je springt..";
+        }
+        else
+        {
+            yield return new WaitForSeconds(val);
+        }
+    }
+
+    public void EnableText()
+    {
+        instructionsText.enabled = true;
+        tutorialStep = 1;
     }
 }

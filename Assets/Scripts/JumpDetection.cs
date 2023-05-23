@@ -6,6 +6,8 @@ using Windows.Kinect;
 using System.Threading;
 using System;
 using Unity.VisualScripting;
+using System.Drawing;
+using Color = UnityEngine.Color;
 
 public class JumpDetection : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class JumpDetection : MonoBehaviour
     private PlayerBehaviour player2;
     public PlayerBehaviour playerPrefab;
     public MovingObstacle obstacle;
+    private bool tutorialTextStarted = false;
 
     private List<ulong> _PlayerIds = new List<ulong>();
     private ulong[] PlayerIDs = { 0, 0, 0, 0 };
@@ -136,16 +139,19 @@ public class JumpDetection : MonoBehaviour
 
     private GameObject CreateBodyObject(ulong id)
     {
-
         GameObject body = new GameObject("Body:" + id);
 
         // Add ID into the array and spawn in player.
         InsertIntoFirstEmptySlot(id);
-
+        tutorial.instructionsText.enabled = true;
+        if(!tutorialTextStarted)
+        {
+            tutorial.EnableText();
+            tutorialTextStarted = true;
+        }
         for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
         {
             GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
             LineRenderer lr = jointObj.AddComponent<LineRenderer>();
             lr.material = BoneMaterial;
             #pragma warning disable CS0618 // Type or member is obsolete
@@ -153,13 +159,11 @@ public class JumpDetection : MonoBehaviour
             lr.SetWidth(0f, 0f);
             //lr.SetWidth(0.05f, 0.05f);
             #pragma warning restore CS0618 // Type or member is obsolete
-
             jointObj.transform.localScale = new Vector3(0f, 0f, 0f);
             //jointObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             jointObj.name = jt.ToString();
             jointObj.transform.parent = body.transform;
         }
-
         return body;
     }
 
@@ -225,34 +229,23 @@ public class JumpDetection : MonoBehaviour
                         restPoint1 = point;
                         _Initialized1 = true;
                     }
-                    // Vertical movement.
-                    // jump.
-                    if (point.y > restPoint1.y + 1)
+                    tutorialMovementDefiner(restPoint1, point, 1, player1);
+                }
+                if (PlayerIDs[1] != 0 && player2 != null)
+                {
+                    if (body.TrackingId == PlayerIDs[1] && !_Initialized2)
                     {
-                        tutorial.tutorialSteps(player1, 1, Actions.PlayerActions.Jump);
+                        //Set initial point.
+                        restPoint2 = point;
+                        _Initialized2 = true;
                     }
-                    // Crouch.
-                    else if (point.y < restPoint1.y - 1.5)
-                    {
-                        tutorial.tutorialSteps(player1, 1, Actions.PlayerActions.Crouch);
-                    }
-                    // Horizontal movement.
-                    // Moving left.
-                    if (point.x < restPoint1.x - 1)
-                    {
-                        tutorial.tutorialSteps(player1, 1, Actions.PlayerActions.Left);
-                    }
-                    // Moving right.
-                    else if (point.x > restPoint1.x + 1)
-                    {
-                        tutorial.tutorialSteps(player1, 1, Actions.PlayerActions.Right);
-                    }
+                    tutorialMovementDefiner(restPoint2, point, 2, player2);
                 }
             } 
-            // Play game while the tutorial is over.
-       
+            // Play game while the tutorial is over.       
             else if(!tutorial.tutorialOngoing)
-            //{
+            {
+                obstacle.started = true;
                 // Player 1.
                 if (PlayerIDs[0] != 0 && player1 != null)
                 {
@@ -264,13 +257,15 @@ public class JumpDetection : MonoBehaviour
                     }
                     // Vertical movement.
                     // jump.
-                    if (point.y > restPoint1.y + 1)
+                    if (point.y > restPoint1.y + 1.2)
                     {
+                        player1.FloorCollidersToggle(true);
                         player1.PlayerJump();
                     }
                     // Crouch.
-                    else if (point.y < restPoint1.y - 1.5)
+                    else if (point.y < restPoint1.y - 1.2)
                     {
+                        player1.FloorCollidersToggle(false);
                         player1.PlayerCrouch();
                     }
                     // Horizontal movement.
@@ -294,28 +289,54 @@ public class JumpDetection : MonoBehaviour
                     }
 
                 }
-                // Player 2.
-                if (PlayerIDs[1] != 0 && player2 != null)
-                {
-                    // Initializing player
-                    if (body.TrackingId == PlayerIDs[1] && !_Initialized2)
-                    {
-                        //Set initial point
-                        restPoint2 = point;
-                        _Initialized2 = true;
-                    }
-                    // Player jumped
-                    if (point.y > restPoint2.y + 1)
-                    {
-                        if (body.TrackingId == PlayerIDs[1])
-                        {
-                            player2.PlayerJump();
-                        }
-                    }
+                //// Player 2.
+                //if (PlayerIDs[1] != 0 && player2 != null)
+                //{
+                //    // Initializing player
+                //    if (body.TrackingId == PlayerIDs[1] && !_Initialized2)
+                //    {
+                //        //Set initial point
+                //        restPoint2 = point;
+                //        _Initialized2 = true;
+                //    }
+                //    // Player jumped
+                //    if (point.y > restPoint2.y + 1)
+                //    {
+                //        if (body.TrackingId == PlayerIDs[1])
+                //        {
+                //            player2.PlayerJump();
+                //        }
+                //    }
                 //}
             }
         }
         return point;
+    }
+
+    private void tutorialMovementDefiner(Vector3 restPoint, Vector3 point, int playerNum, PlayerBehaviour player)
+    {
+        // Vertical movement.
+        // jump.
+        if (point.y > restPoint.y + 1)
+        {
+            tutorial.tutorialSteps(player, playerNum, Actions.PlayerActions.Jump);
+        }
+        // Crouch.
+        else if (point.y < restPoint.y - 1.5)
+        {
+            tutorial.tutorialSteps(player, playerNum, Actions.PlayerActions.Crouch);
+        }
+        // Horizontal movement.
+        // Moving left.
+        if (point.x < restPoint.x - 1)
+        {
+            tutorial.tutorialSteps(player, playerNum, Actions.PlayerActions.Left);
+        }
+        // Moving right.
+        else if (point.x > restPoint.x + 1)
+        {
+            tutorial.tutorialSteps(player, playerNum, Actions.PlayerActions.Right);
+        }
     }
 
     /* These methods are used to track the skeletons and link them to the correct player.
@@ -325,7 +346,6 @@ public class JumpDetection : MonoBehaviour
 
     // Called when a new skeleton has been detected.
     // in: val being the skeleton ID
-    //
     private void InsertIntoFirstEmptySlot(ulong val)
     {
         int index = 0;
@@ -341,6 +361,8 @@ public class JumpDetection : MonoBehaviour
                     case 0:
                         // Spawn p1 and start the game
                         player1 = (PlayerBehaviour)Instantiate(playerPrefab);
+                        player1.transform.position = new Vector2(player1.transform.position.x + 4f, player1.transform.position.y);
+
                         tutorial.totalPlayers++;
                         //obstacle.started = true;
                         break;
@@ -374,11 +396,13 @@ public class JumpDetection : MonoBehaviour
                         player1.RemovePlayer();
                         player1 = null;
                         _Initialized1 = false;
+                        //tutorial.totalPlayers--;
                         break;
                     case 1:
                         player2.RemovePlayer();
                         player2 = null;
                         _Initialized2 = false;
+                        //tutorial.totalPlayers--;
                         break;
                 }
             }

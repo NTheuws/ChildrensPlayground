@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     private Rigidbody2D rb;
-    public GameObject floor1;
+    private GameObject floor1;
     private float upwardsVelocity = 8f;
     private float horizontalSpeed = 2f;
 
@@ -96,15 +96,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void MoveLeft()
     {
-        StartCoroutine(ExampleCoroutine(true, false));
+        StartCoroutine(WaitForMovement(true, false));
     }
 
     public void MoveRight()
     {
-        StartCoroutine(ExampleCoroutine(false, true));
+        StartCoroutine(WaitForMovement(false, true));
     }
 
-    IEnumerator ExampleCoroutine(bool left, bool right)
+    IEnumerator WaitForMovement(bool left, bool right)
     {
         isMovingLeft = left;
         isMovingRight = right;
