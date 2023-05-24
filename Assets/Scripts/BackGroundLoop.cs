@@ -42,7 +42,6 @@ public class BackGroundLoop : MonoBehaviour
 
             if (c.tag != "Ground")
             {
-                //c.SetActive(true);
                 RandomizePlatform(c);
             }
         }
@@ -79,7 +78,6 @@ public class BackGroundLoop : MonoBehaviour
 
                 if (firstChild.tag != "Ground")
                 {
-                    firstChild.SetActive(true);
                     RandomizePlatform(firstChild);
                 }
             }
@@ -109,11 +107,16 @@ public class BackGroundLoop : MonoBehaviour
         }
 
         // Check if something spawns on top.
-        
         PlatformBehavior platform = obj.GetComponent<PlatformBehavior>();
         if (platform != null)
         {
-            platform.AttemptSpawn();
+            platform.AttemptSpawn(false);
+
+            // If its the first floor itll also generate for the bottom floor.
+            if (obj.tag == "Platform1")
+            {
+                platform.AttemptSpawn(true);
+            }
         }
     }
 }
