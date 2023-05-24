@@ -13,7 +13,7 @@ public class BackGroundLoop : MonoBehaviour
     private Vector2 screenBounds;
     public float choke;
 
-    private float movingSpeed = 3F;
+    private float movingSpeed = 2.2F;
 
 
     void Start()
@@ -95,17 +95,25 @@ public class BackGroundLoop : MonoBehaviour
          */
 
         float ran = Random.Range(1, 100);
-        if (ran <= 70)
+        if (ran <= 65)
         {
             obj.GetComponent<SpriteRenderer>().sprite = platforms[0];
         }
-        else if(ran > 70 && ran <= 85)
+        else if(ran > 65 && ran <= 85)
         {
             obj.GetComponent<SpriteRenderer>().sprite = platforms[1];
         }
         else
         {
             obj.GetComponent<SpriteRenderer>().sprite = platforms[2];
+        }
+
+        // Check if something spawns on top.
+        
+        PlatformBehavior platform = obj.GetComponent<PlatformBehavior>();
+        if (platform != null)
+        {
+            platform.AttemptSpawn();
         }
     }
 }
