@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlatformBehavior : MonoBehaviour
 {
-    //public GameObject topPlacement;
-    //public GameObject bottomPlacement;
+    private int spawnCounter = 0;
 
     private Vector3 currentLocation;
     public GameObject enemy;
@@ -31,22 +30,30 @@ public class PlatformBehavior : MonoBehaviour
         // Slight difference in placement to have a slightly more playful element.
         float addedX = Random.Range(-0.75f,0.75f);
 
-        float ran = Random.Range(1, 100);
-        if (ran <= spawnNothing)
+        if (spawnCounter > 0)
         {
-            // keep spot empty.
+            float ran = Random.Range(1, 100);
+            if (ran <= spawnNothing)
+            {
+                // keep spot empty.
+            }
+            else if (ran > spawnNothing && ran <= spawnEnemyUpperChance)
+            // Spawn enemy.
+            {
+                GameObject c = Instantiate(enemy) as GameObject;
+                PositionObject(ran, c, addedX, below);
+            }
+            // Spawn tickets.
+            else
+            {
+                GameObject c = Instantiate(ticket) as GameObject;
+                PositionObject(ran, c, addedX, below);
+            }
         }
-        else if(ran > spawnNothing && ran <= spawnEnemyUpperChance)
-        // Spawn enemy.
+        // Make sure the 1st floor doesnt count double.
+        if (!below)
         {
-            GameObject c = Instantiate(enemy) as GameObject;
-            PositionObject(ran, c, addedX, below);
-        }
-        // Spawn tickets.
-        else
-        {
-            GameObject c = Instantiate(ticket) as GameObject;
-            PositionObject(ran, c, addedX, below); 
+            spawnCounter++;
         }
     }
 
@@ -56,6 +63,7 @@ public class PlatformBehavior : MonoBehaviour
         float addedY = 0;
         if (below)
         {
+            // Place below the 1st platform so the floor also gets populated.
             addedY = -1.7f;
         }
         if (val % 2 == 0)

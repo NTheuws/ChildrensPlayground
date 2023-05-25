@@ -52,7 +52,7 @@ public class Tutorial : MonoBehaviour
         switch (tutorialStep)
         {
             case 1:
-                StartCoroutine(ExampleCoroutine(5));
+                StartCoroutine(WaitForSecondsCoroutine(5));
                 break;
             case 2:
                 instructionsText.text = "Bukt..";
@@ -201,7 +201,7 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    IEnumerator ExampleCoroutine(int val)
+    IEnumerator WaitForSecondsCoroutine(int val)
     {
         if (firstMessage)
         {

@@ -12,6 +12,7 @@ public class BackGroundLoop : MonoBehaviour
     private Camera mainCamera;
     private Vector2 screenBounds;
     public float choke;
+    public GameTimer gameTimer;
 
     private float movingSpeed = 2.2F;
 
@@ -25,6 +26,7 @@ public class BackGroundLoop : MonoBehaviour
         {
             LoadObjects(obj);
         }
+        gameTimer.StartTimer();
     }
 
     private void LoadObjects(GameObject obj)
