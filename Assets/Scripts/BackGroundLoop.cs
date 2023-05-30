@@ -93,25 +93,32 @@ public class BackGroundLoop : MonoBehaviour
          * 1: wooden platform
          * 2: gap
          */
-
+        int platformType = -1;
         float ran = Random.Range(1, 100);
+        
         if (ran <= 65)
         {
             obj.GetComponent<SpriteRenderer>().sprite = platforms[0];
+            platformType = 0;
         }
         else if(ran > 65 && ran <= 85)
         {
             obj.GetComponent<SpriteRenderer>().sprite = platforms[1];
+            platformType = 1;
         }
         else
         {
             obj.GetComponent<SpriteRenderer>().sprite = platforms[2];
+            platformType = 2;
         }
 
         // Check if something spawns on top.
-        PlatformBehavior platform = obj.GetComponent<PlatformBehavior>();
+        PlatformBehaviour platform = obj.GetComponent<PlatformBehaviour>();
         if (platform != null)
         {
+            // Set platformtype for collisions.
+            platform.ChangePlatformType(platformType);
+
             platform.AttemptSpawn(false);
 
             // If its the first floor itll also generate for the bottom floor.

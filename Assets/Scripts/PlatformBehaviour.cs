@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformBehavior : MonoBehaviour
+public class PlatformBehaviour : MonoBehaviour
 {
     private int spawnCounter = 0;
 
@@ -16,6 +16,10 @@ public class PlatformBehavior : MonoBehaviour
     // Chances for the spawns on the platforms.
     private const float spawnNothing = 70;
     private const float spawnEnemyUpperChance = 80;
+
+    // Keep track of what kind of platform is being used.
+    // 0. full, 1. half, 2 empty
+    private int platformType = 0;
 
     void Start()
     {
@@ -75,6 +79,14 @@ public class PlatformBehavior : MonoBehaviour
         {
             //Lower half.
             obj.transform.position = new Vector3(currentLocation.x + addedX, currentLocation.y + lowerPlacement + addedY, currentLocation.z);
+        }
+    }
+
+    public void ChangePlatformType(int type)
+    {
+        if (type >= 0 && type <= 3)
+        {
+            platformType = type;
         }
     }
 }
