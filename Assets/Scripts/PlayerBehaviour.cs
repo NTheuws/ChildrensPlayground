@@ -24,6 +24,9 @@ public class PlayerBehaviour : MonoBehaviour
     // Ignore tutorial collisions.
     public bool tutorialCollisions;
 
+    private bool falling = false;
+    private bool jumped = false;
+
     void Start()
     {
         if (tutorialCollisions)
@@ -68,6 +71,25 @@ public class PlayerBehaviour : MonoBehaviour
         {
             PlayerJump();
         }
+
+        // Check player movement.
+        Vector2 movement = rb.velocity;
+        if (movement.y <0 && !falling) 
+        {
+            jumped = false;
+            falling = true;        
+        }
+        else if(movement.y > 0)
+        {
+            falling = false;
+        }
+
+        // the player is grounded when the y-axis isnt moving.
+        if (movement.y == 0 && !jumped)
+        {
+            isGrounded = true;
+        }
+
     }
     // When entering the collision of an object.
     void OnCollisionEnter2D(Collision2D collision)
@@ -90,7 +112,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 FloorCollidersToggle(true);
             }
-
+            jumped = true;
             rb.AddForce(Vector2.up * upwardsVelocity, ForceMode2D.Impulse);
         }
     }
