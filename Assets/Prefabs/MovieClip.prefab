@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6174075982095290094}
   - component: {fileID: -6235933862605973488}
   - component: {fileID: 3593043035458872347}
+  - component: {fileID: 2587912420632638151}
   m_Layer: 0
   m_Name: MovieClip
   m_TagString: Untagged
@@ -148,3 +149,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.85, y: 0.85}
   m_EdgeRadius: 0
+--- !u!114 &2587912420632638151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4665244410290077658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3baee05e157c2445bb27f2f49a8bfd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

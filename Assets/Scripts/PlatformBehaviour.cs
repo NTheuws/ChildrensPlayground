@@ -87,6 +87,22 @@ public class PlatformBehaviour : MonoBehaviour
         if (type >= 0 && type <= 3)
         {
             platformType = type;
+
+            // 0: full block, all colliders
+            // 1: half, no colliders only when crouching or jumping/ only collide when walking on top.
+            // 2: empty, no colliders
+            switch(type)
+            {
+                case 0:
+                    this.gameObject.GetComponent<Collider2D>().enabled = true;
+                    break;
+                case 1:
+                    break;
+
+                case 2:
+                    this.gameObject.GetComponent<Collider2D>().enabled = false;
+                    break;
+            }
         }
     }
 }
