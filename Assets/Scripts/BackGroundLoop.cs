@@ -14,9 +14,9 @@ public class BackGroundLoop : MonoBehaviour
     public float choke;
     public GameTimer gameTimer;
 
-    private float movingSpeed = 2.2F;
+    private float movingSpeed = 2f;
 
-
+    private bool StartMoving = false;
     void Start()
     {
         mainCamera = gameObject.GetComponent<Camera>();
@@ -26,7 +26,6 @@ public class BackGroundLoop : MonoBehaviour
         {
             LoadObjects(obj);
         }
-        gameTimer.StartTimer();
     }
 
     private void LoadObjects(GameObject obj)
@@ -51,10 +50,21 @@ public class BackGroundLoop : MonoBehaviour
         Destroy(clone);
         Destroy(obj.GetComponent<SpriteRenderer>());
     }
+    public void GameStarted()
+    {
+        // Start the timer.
+        gameTimer.StartTimer();
+
+        // Allow the game to move.
+        StartMoving = true;
+    }
 
     private void Update()
     {
-        transform.position += Vector3.right * Time.deltaTime * movingSpeed;
+        if (StartMoving)
+        {
+            transform.position += Vector3.right * Time.deltaTime * movingSpeed;
+        }
     }
 
     private void LateUpdate()

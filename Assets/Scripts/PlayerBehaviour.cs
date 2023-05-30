@@ -7,7 +7,8 @@ public class PlayerBehaviour : MonoBehaviour
     private Rigidbody2D rb;
     private GameObject floor1;
     private float upwardsVelocity = 8f;
-    private float horizontalSpeed = 2f;
+    private float horizontalSpeed = 1.5f;
+    private float idleSpeed = 2f;
 
     private Vector3 currentDirection;
     private Vector3 previousPosition;
@@ -16,12 +17,19 @@ public class PlayerBehaviour : MonoBehaviour
     public bool isGrounded = true;
     // After crouching
     private bool isDropping = false;
-    // Variables for Player movement
+    // Variables for Player movement.
     public bool isMovingRight = false;
     public bool isMovingLeft = false;
+
+    // Ignore tutorial collisions.
+    public bool tutorialCollisions;
+
     void Start()
     {
-        floor1 = GameObject.FindGameObjectWithTag("1st Layer Ground");
+        if (tutorialCollisions)
+        {
+            floor1 = GameObject.FindGameObjectWithTag("1st Layer Ground");
+        }
         rb = this.GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
         previousPosition = transform.position;
@@ -36,16 +44,24 @@ public class PlayerBehaviour : MonoBehaviour
         // Turn the colliders on after you reached the top of your jump.
         if (currentDirection.y < 0 && !isDropping)
         {
-            FloorCollidersToggle(false);
+            if (tutorialCollisions)
+            {
+                FloorCollidersToggle(false);
+            }
         }
 
         if (isMovingLeft)
         {
-            transform.position += transform.right * -horizontalSpeed * Time.deltaTime;
+            transform.position += transform.right * -(horizontalSpeed/2)* Time.deltaTime;
         }
         else if (isMovingRight)
         {
-            transform.position += transform.right * horizontalSpeed * Time.deltaTime;
+            transform.position += transform.right * (horizontalSpeed + idleSpeed)* Time.deltaTime;
+        }
+        // If not in tutorial make sure the character stays neutral when the player is not moving.
+        else if (!tutorialCollisions)
+        {
+            transform.position += transform.right * idleSpeed * Time.deltaTime;
         }
         // For test purposes, when pressing space the player jumps.
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -70,14 +86,22 @@ public class PlayerBehaviour : MonoBehaviour
         {
             isGrounded = false;
             // Make sure you're able to jump through the platforms.
-            FloorCollidersToggle(true);
+            if (tutorialCollisions)
+            {
+                FloorCollidersToggle(true);
+            }
+
             rb.AddForce(Vector2.up * upwardsVelocity, ForceMode2D.Impulse);
         }
     }
     // Player is crouching.
     public void PlayerCrouch()
     {
-        FloorCollidersToggle(true);
+        if (tutorialCollisions)
+        {
+            FloorCollidersToggle(true);
+        }
+
         isDropping = true;
     }
     // Remove the gameobject.
