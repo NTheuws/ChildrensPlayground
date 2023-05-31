@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    // JumpEvent.
+    public delegate void DisableHalfBlock();
+    public static event DisableHalfBlock disableHalfBlock;
+
+
     private Rigidbody2D rb;
     private GameObject floor1;
     private float upwardsVelocity = 8f;
@@ -16,7 +21,7 @@ public class PlayerBehaviour : MonoBehaviour
     // Variable to prevent double jumps, jumping is only possible when the player is grounded.
     public bool isGrounded = true;
     // After crouching
-    private bool isDropping = false;
+    public bool isDropping = false;
     // Variables for Player movement.
     public bool isMovingRight = false;
     public bool isMovingLeft = false;
@@ -24,8 +29,8 @@ public class PlayerBehaviour : MonoBehaviour
     // Ignore tutorial collisions.
     public bool tutorialCollisions;
 
-    private bool falling = false;
-    private bool jumped = false;
+    public bool falling = false;
+    public bool jumped = false;
 
     void Start()
     {
@@ -113,6 +118,13 @@ public class PlayerBehaviour : MonoBehaviour
                 FloorCollidersToggle(true);
             }
             jumped = true;
+
+            // Invoke event.
+            if (disableHalfBlock != null)
+            {
+                disableHalfBlock();
+            }
+
             rb.AddForce(Vector2.up * upwardsVelocity, ForceMode2D.Impulse);
         }
     }
@@ -122,6 +134,11 @@ public class PlayerBehaviour : MonoBehaviour
         if (tutorialCollisions)
         {
             FloorCollidersToggle(true);
+        }
+        // Invoke event.
+        if (disableHalfBlock != null)
+        {
+            disableHalfBlock();
         }
 
         isDropping = true;
