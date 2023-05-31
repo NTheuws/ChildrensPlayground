@@ -22,14 +22,10 @@ public class PlatformBehaviour : MonoBehaviour
     // 0. full, 1. half, 2 empty.
     private int platformType = 0;
 
-    // Collider for this gameobject.
-    private Collider2D collider;
-
     void Start()
     {
         currentLocation = transform.position;
         PlayerBehaviour.disableHalfBlock += HalfBlockCollisionJump;
-        collider = GetComponent<Collider2D>();
     }
 
     private void HalfBlockCollisionJump()
@@ -38,16 +34,16 @@ public class PlatformBehaviour : MonoBehaviour
         {
             // Full platform.
             case 0:
-                collider.enabled = true;
+                GetComponent<Collider2D>().enabled = true;
                 break;
             // Wooden platform.
             case 1:
-                collider.enabled = false;
+                GetComponent<Collider2D>().enabled = false;
                 StartCoroutine(WaitABit());
                 break;
             // Empty space.
             case 2:
-                collider.enabled = false;
+                GetComponent<Collider2D>().enabled = false;
                 break;
         }
     }
@@ -121,14 +117,14 @@ public class PlatformBehaviour : MonoBehaviour
             switch(type)
             {
                 case 0:
-                    collider.enabled = true;
+                    GetComponent<Collider2D>().enabled = true;
                     break;
                 case 1:
                     // collision is only on when the character is falling downwards, then will be turned off when crouching.
-                    collider.enabled = true;
+                    GetComponent<Collider2D>().enabled = true;
                     break;
                 case 2:
-                    collider.enabled = false;
+                    GetComponent<Collider2D>().enabled = false;
                     break;
             }
         }
@@ -139,7 +135,7 @@ public class PlatformBehaviour : MonoBehaviour
         if (platformType == 1)
         {
             yield return new WaitForSeconds(0.4f);
-            collider.enabled = true;
+            GetComponent<Collider2D>().enabled = true;
         }
     }
 }

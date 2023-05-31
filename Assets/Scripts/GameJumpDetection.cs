@@ -215,66 +215,43 @@ public class GameJumpDetection : MonoBehaviour
                     restPoint1 = point;
                     _Initialized1 = true;
                 }
-                // Vertical movement.
-                // jump.
-                if (point.y > restPoint1.y + 1.2)
-                {
-                    player1.PlayerJump();
-                }
-                // Crouch.
-                else if (point.y < restPoint1.y - 1.2)
-                {
-                    player1.PlayerCrouch();
-                }
-                // Horizontal movement.
-                // Moving left.
-                if (point.x < restPoint1.x - 1)
-                {
-                    player1.isMovingLeft = true;
-                    player1.isMovingRight = false;
-                }
-                // Moving right.
-                else if (point.x > restPoint1.x + 1)
-                {
-                    player1.isMovingRight = true;
-                    player1.isMovingLeft = false;
-                }
-                // Staying still.
-                else
-                {
-                    player1.isMovingLeft = false;
-                    player1.isMovingRight = false;
-                }
+                MovementDefiner(restPoint1, point, player1);
             }
         }
         return point;
     }
 
-    //private void tutorialMovementDefiner(Vector3 restPoint, Vector3 point, int playerNum, PlayerBehaviour player)
-    //{
-    //    // Vertical movement.
-    //    // jump.
-    //    if (point.y > restPoint.y + 1)
-    //    {
-    //        tutorial.tutorialSteps(player, playerNum, Actions.PlayerActions.Jump);
-    //    }
-    //    // Crouch.
-    //    else if (point.y < restPoint.y - 1.5)
-    //    {
-    //        tutorial.tutorialSteps(player, playerNum, Actions.PlayerActions.Crouch);
-    //    }
-    //    // Horizontal movement.
-    //    // Moving left.
-    //    if (point.x < restPoint.x - 1)
-    //    {
-    //        tutorial.tutorialSteps(player, playerNum, Actions.PlayerActions.Left);
-    //    }
-    //    // Moving right.
-    //    else if (point.x > restPoint.x + 1)
-    //    {
-    //        tutorial.tutorialSteps(player, playerNum, Actions.PlayerActions.Right);
-    //    }
-    //}
+    private void MovementDefiner(Vector3 restPoint, Vector3 point,PlayerBehaviour player)
+    {
+        // Vertical movement.
+        // jump.
+        if (point.y > restPoint.y + 1)
+        {
+            player.PlayerJump();
+        }
+        // Crouch.
+        else if (point.y < restPoint.y - 1.5)
+        {
+            player.PlayerCrouch();
+        }
+        // Horizontal movement.
+        // Moving left.
+        if (point.x < restPoint.x - 1)
+        {
+            player.MoveLeft();
+        }
+        // Moving right.
+        else if (point.x > restPoint.x + 1)
+        {
+            player.MoveRight();
+        }
+        // Standing still.
+        else
+        {
+            player.isMovingLeft = false;
+            player.isMovingRight = false;
+        }
+    }
 
     /* These methods are used to track the skeletons and link them to the correct player.
      * When spawning in a skeleton it'll have a personal ID linked to it.
