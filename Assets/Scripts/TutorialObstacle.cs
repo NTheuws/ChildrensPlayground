@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TutorialObstacle : MonoBehaviour
 {
     private float speed = 3f;
-    public float slowedSpeed = 0.7f;
     private Vector3 startPos;
     public bool started = false;
     public bool hitPlayer = false;
@@ -28,15 +28,17 @@ public class TutorialObstacle : MonoBehaviour
             if (transform.position.x < -14f)
             {
                 transform.position = startPos;
-                if (hitPlayer)
+                ObstacleDone = true;
+                Destroy(gameObject);
+
+                // Get rid of the current skeleton tracker.
+                GameObject[] skeletonTracker = GameObject.FindGameObjectsWithTag("SkeletonTracker");
+                foreach (GameObject obj in skeletonTracker)
                 {
-                    speed = 0;
-                    ObstacleDone = true;
+                    Destroy(obj);
                 }
-            }
-            if (hitPlayer && transform.position.x < pausePointX)
-            {
-                speed = slowedSpeed;                
+                // Start the game.
+                SceneManager.LoadScene("MainGame");
             }
         }
     }
@@ -44,7 +46,6 @@ public class TutorialObstacle : MonoBehaviour
     // Move object back to original position on contact.
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        speed = 3f;
         transform.position = startPos;
         hitPlayer = true;
     }

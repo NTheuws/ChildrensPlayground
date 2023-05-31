@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4852225710182667826
+--- !u!1 &8673318867771620822
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4852225710182667828}
-  - component: {fileID: 4852225710182667829}
-  - component: {fileID: 4852225710182667831}
+  - component: {fileID: 8673318867771620816}
+  - component: {fileID: 4254564769908714470}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -18,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4852225710182667828
+--- !u!4 &8673318867771620816
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4852225710182667826}
+  m_GameObject: {fileID: 8673318867771620822}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,41 +32,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4852225710182667829
+--- !u!114 &4254564769908714470
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4852225710182667826}
+  m_GameObject: {fileID: 8673318867771620822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 430f3c0ae38b9a94190857c6da3876fc, type: 3}
+  m_Script: {fileID: 11500000, guid: f1b8807880617ba49a79576fa4b66a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BoneMaterial: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
   BodySourceManager: {fileID: 0}
   restPoint1: {x: 0, y: 0, z: 0}
-  player1: {fileID: 968204395223907730, guid: b4f255c57812ba346b0d20820ba6dbda, type: 3}
-  playerPrefab: {fileID: 968204395223907730, guid: b4f255c57812ba346b0d20820ba6dbda, type: 3}
-  obstacle: {fileID: 0}
-  tutorial: {fileID: 4852225710182667831}
-  tempPlatform: {fileID: 0}
---- !u!114 &4852225710182667831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4852225710182667826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c72ce01cdafbdc4e82e9282a3753592, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialOngoing: 1
-  totalPlayers: 0
-  instructionsText: {fileID: 0}
-  obstaclePrefab: {fileID: -3638960189844118779, guid: 3eb7d5991d9fb41428ff89ccf29e5f10, type: 3}
-  pointObject: {fileID: 0}
-  currentScore: {fileID: 0}
+  player1: {fileID: 7747091092952116556, guid: e42365566e2add84e98d91f8d3bfd660, type: 3}
+  playerPrefab: {fileID: 7747091092952116556, guid: e42365566e2add84e98d91f8d3bfd660, type: 3}

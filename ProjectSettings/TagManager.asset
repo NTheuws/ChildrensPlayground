@@ -8,6 +8,7 @@ TagManager:
   - 1st Layer Ground
   - Platform1
   - Score
+  - SkeletonTracker
   layers:
   - Default
   - TransparentFX

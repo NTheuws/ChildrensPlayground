@@ -63,7 +63,7 @@ public class GameJumpDetection : MonoBehaviour
 
     private void Start()
     {
-
+        BodySourceManager = GameObject.FindGameObjectWithTag("SkeletonTracker");
     }
     void Update()
     {
@@ -238,12 +238,14 @@ public class GameJumpDetection : MonoBehaviour
         // Moving left.
         if (point.x < restPoint.x - 1)
         {
-            player.MoveLeft();
+            player.isMovingLeft = true;
+            player.isMovingRight = false;
         }
         // Moving right.
         else if (point.x > restPoint.x + 1)
         {
-            player.MoveRight();
+            player.isMovingLeft = false;
+            player.isMovingRight = true;
         }
         // Standing still.
         else

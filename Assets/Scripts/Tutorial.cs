@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -39,6 +40,7 @@ public class Tutorial : MonoBehaviour
     // Score count.
     public TMP_Text currentScore;
 
+    private bool alreadyJumped = false;
     private bool firstMessage = true;
 
     private void Start()
@@ -74,7 +76,10 @@ public class Tutorial : MonoBehaviour
                 }
                 break;
             case 6:
-                instructionsText.text = "Als je geraakt wordt door iets anders \ngaan je punten omlaag.";
+                if (!alreadyJumped)
+                {
+                    instructionsText.text = "Als je geraakt wordt door iets anders \ngaan je punten omlaag.";
+                }
                 obstacle.started = true;
 
                 if (obstacle.hitPlayer)
@@ -88,10 +93,6 @@ public class Tutorial : MonoBehaviour
                 if (!obstacle.hitPlayer)
                 {
                     instructionsText.text = "";
-                }
-                else
-                {
-                    //instructionsText.text = "Spring eroverheen!";
                 }
                 break;
         }
@@ -152,16 +153,21 @@ public class Tutorial : MonoBehaviour
                     case 5:
                     // Getting hit by obstacle
                     case 6:
+                        // Option to dodge, when dodged skip step 7.
+                        if (action == Actions.PlayerActions.Jump)
+                        {
+                            alreadyJumped = true;
+                            instructionsText.text = "";
+                            player.PlayerJump();
+                        }
                         break;
                     // Dodge obstacle
                     case 7:
                         if (action == Actions.PlayerActions.Jump)
                         {
+                            alreadyJumped = true;
                             instructionsText.text = "";
                             player.PlayerJump();
-                            obstacle.slowedSpeed = 3f;
-                            // Toggle player in array.
-                            succeededPlayers[playerNumber - 1] = 1;
                         }
                         break;
                 }
@@ -172,7 +178,6 @@ public class Tutorial : MonoBehaviour
                 if (obstacle.ObstacleDone)
                 {
                     instructionsText.enabled = false;
-                    Destroy(obstacle);
                     tutorialOngoing = false;
                 }
             }
