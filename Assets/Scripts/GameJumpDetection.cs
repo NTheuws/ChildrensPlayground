@@ -23,7 +23,8 @@ public class GameJumpDetection : MonoBehaviour
     private Vector3 restPoint2 = new Vector3(0, 0, 0);
     public PlayerBehaviour player1;
     public PlayerBehaviour player2;
-    public PlayerBehaviour playerPrefab;
+    public PlayerBehaviour playerPrefab1;
+    public PlayerBehaviour playerPrefab2;
 
     private List<ulong> _PlayerIds = new List<ulong>();
     private ulong[] PlayerIDs = { 0, 0, 0, 0 };
@@ -317,7 +318,7 @@ public class GameJumpDetection : MonoBehaviour
                 {
                     case 0:
                         // Spawn p1 and start the game
-                        player1 = (PlayerBehaviour)Instantiate(playerPrefab);
+                        player1 = (PlayerBehaviour)Instantiate(playerPrefab1);
                         player1.transform.position = new Vector2(player1.transform.position.x + 4f, player1.transform.position.y);
                         // Start moving the game.
                         BackGroundLoop background = (BackGroundLoop)FindObjectOfType<BackGroundLoop>();
@@ -325,7 +326,7 @@ public class GameJumpDetection : MonoBehaviour
                         break;
                     case 1:
                         // Spawn p2.
-                        player2 = (PlayerBehaviour)Instantiate(playerPrefab);
+                        player2 = (PlayerBehaviour)Instantiate(playerPrefab2);
                         player2.transform.position = new Vector2(player1.transform.position.x + 4f, player1.transform.position.y);
                         break;
                 }
