@@ -22,7 +22,7 @@ public class GameJumpDetection : MonoBehaviour
     public Vector3 restPoint1 = new Vector3(0, 0, 0);
     private Vector3 restPoint2 = new Vector3(0, 0, 0);
     public PlayerBehaviour player1;
-    private PlayerBehaviour player2;
+    public PlayerBehaviour player2;
     public PlayerBehaviour playerPrefab;
 
     private List<ulong> _PlayerIds = new List<ulong>();
@@ -206,16 +206,54 @@ public class GameJumpDetection : MonoBehaviour
         // If the joint matches the tracked one.
         if (joint.JointType == Kinect.JointType.SpineShoulder)
         {
+            //// Player 1.
+            //if (PlayerIDs[0] != 0 && player1 != null)
+            //{
+            //    if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
+            //    {
+            //        //Set initial point.
+            //        restPoint1 = point;
+            //        _Initialized1 = true;
+            //    }
+            //    MovementDefiner(restPoint1, point, player1);
+            //}
+            //// Player 2.
+            //if (PlayerIDs[1] != 0 && player2 != null)
+            //{
+            //    if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
+            //    {
+            //        //Set initial point.
+            //        restPoint2 = point;
+            //        _Initialized2 = true;
+            //    }
+            //    MovementDefiner(restPoint2, point, player2);
+            //}
             // Player 1.
-            if (PlayerIDs[0] != 0 && player1 != null)
+            if (body.TrackingId == PlayerIDs[0])
             {
-                if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
+                if (PlayerIDs[0] != 0 && player1 != null)
                 {
-                    //Set initial point.
-                    restPoint1 = point;
-                    _Initialized1 = true;
+                    if (!_Initialized1)
+                    {
+                        //Set initial point.
+                        restPoint1 = point;
+                        _Initialized1 = true;
+                    }
+                    MovementDefiner(restPoint1, point, player1);
                 }
-                MovementDefiner(restPoint1, point, player1);
+            }
+            else if (body.TrackingId == PlayerIDs[1])
+            {
+                if (PlayerIDs[1] != 0 && player2 != null)
+                {
+                    if (!_Initialized2)
+                    {
+                        //Set initial point.
+                        restPoint2 = point;
+                        _Initialized2 = true;
+                    }
+                    MovementDefiner(restPoint2, point, player2);
+                }
             }
         }
         return point;
@@ -223,35 +261,38 @@ public class GameJumpDetection : MonoBehaviour
 
     private void MovementDefiner(Vector3 restPoint, Vector3 point,PlayerBehaviour player)
     {
-        // Vertical movement.
-        // jump.
-        if (point.y > restPoint.y + 1)
+        if (player != null)
         {
-            player.PlayerJump();
-        }
-        // Crouch.
-        else if (point.y < restPoint.y - 1.5)
-        {
-            player.PlayerCrouch();
-        }
-        // Horizontal movement.
-        // Moving left.
-        if (point.x < restPoint.x - 1)
-        {
-            player.isMovingLeft = true;
-            player.isMovingRight = false;
-        }
-        // Moving right.
-        else if (point.x > restPoint.x + 1)
-        {
-            player.isMovingLeft = false;
-            player.isMovingRight = true;
-        }
-        // Standing still.
-        else
-        {
-            player.isMovingLeft = false;
-            player.isMovingRight = false;
+            // Vertical movement.
+            // jump.
+            if (point.y > restPoint.y + 1)
+            {
+                player.PlayerJump();
+            }
+            // Crouch.
+            else if (point.y < restPoint.y - 1.5)
+            {
+                player.PlayerCrouch();
+            }
+            // Horizontal movement.
+            // Moving left.
+            if (point.x < restPoint.x - 1)
+            {
+                player.isMovingLeft = true;
+                player.isMovingRight = false;
+            }
+            // Moving right.
+            else if (point.x > restPoint.x + 1)
+            {
+                player.isMovingLeft = false;
+                player.isMovingRight = true;
+            }
+            // Standing still.
+            else
+            {
+                player.isMovingLeft = false;
+                player.isMovingRight = false;
+            }
         }
     }
 
@@ -285,6 +326,7 @@ public class GameJumpDetection : MonoBehaviour
                     case 1:
                         // Spawn p2.
                         player2 = (PlayerBehaviour)Instantiate(playerPrefab);
+                        player2.transform.position = new Vector2(player1.transform.position.x + 4f, player1.transform.position.y);
                         break;
                 }
                 return;

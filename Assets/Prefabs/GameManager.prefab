@@ -47,5 +47,6 @@ MonoBehaviour:
   BoneMaterial: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
   BodySourceManager: {fileID: 0}
   restPoint1: {x: 0, y: 0, z: 0}
-  player1: {fileID: 7747091092952116556, guid: e42365566e2add84e98d91f8d3bfd660, type: 3}
-  playerPrefab: {fileID: 7747091092952116556, guid: e42365566e2add84e98d91f8d3bfd660, type: 3}
+  player1: {fileID: 2446738941452614438, guid: 48fdf15fad241cd499e25096ec7a1fd4, type: 3}
+  player2: {fileID: 123178446943259608, guid: b12f3ab70740a994989559170d92d1d0, type: 3}
+  playerPrefab: {fileID: 2446738941452614438, guid: 48fdf15fad241cd499e25096ec7a1fd4, type: 3}

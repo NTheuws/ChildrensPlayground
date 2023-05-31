@@ -8,7 +8,6 @@ public class PlayerBehaviour : MonoBehaviour
     public delegate void DisableHalfBlock();
     public static event DisableHalfBlock disableHalfBlock;
 
-
     private Rigidbody2D rb;
     private GameObject floor1;
     private float upwardsVelocity = 8f;
@@ -142,12 +141,12 @@ public class PlayerBehaviour : MonoBehaviour
             // In the tutorial everything is larger so the jump will have to be as well.
             if (tutorialCollisions)
             {
-                rb.AddForce(Vector2.up * upwardsVelocity, ForceMode2D.Impulse);
+                this.rb.AddForce(Vector2.up * upwardsVelocity, ForceMode2D.Impulse);
             }
             // The actual game is small and the player wont just as high.
             else
             {
-                rb.AddForce(Vector2.up * upwardsVelocity/4f, ForceMode2D.Impulse);
+                this.rb.AddForce(Vector2.up * upwardsVelocity/4f, ForceMode2D.Impulse);
             }
         }
     }

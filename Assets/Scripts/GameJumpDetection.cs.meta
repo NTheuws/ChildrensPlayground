@@ -3,7 +3,12 @@ guid: f1b8807880617ba49a79576fa4b66a1c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BoneMaterial: {instanceID: 0}
+  - BodySourceManager: {instanceID: 0}
+  - player1: {fileID: 2446738941452614438, guid: 48fdf15fad241cd499e25096ec7a1fd4, type: 3}
+  - player2: {instanceID: 0}
+  - playerPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
