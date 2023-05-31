@@ -67,10 +67,6 @@ public class JumpDetection : MonoBehaviour
         { Kinect.JointType.Neck, Kinect.JointType.Head },
     };
 
-    private void Start()
-    {
-
-    }
     void Update()
     {
         if (BodySourceManager == null)

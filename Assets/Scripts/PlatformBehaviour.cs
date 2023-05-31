@@ -134,7 +134,7 @@ public class PlatformBehaviour : MonoBehaviour
     {
         if (platformType == 1)
         {
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.6f);
             GetComponent<Collider2D>().enabled = true;
         }
     }

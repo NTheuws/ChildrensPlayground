@@ -1,22 +1,41 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class GameTimer : MonoBehaviour
 {
+    private bool timerStarted = false;
     public bool gameOver = false;
+    private float totalTime = 300;
+
+    // To display the current time left in seconds.
+    public TMP_Text displayTimeLeft;
+    private string timeTxt = "Tijd: ";
 
     public void StartTimer()
     {
-        StartCoroutine(WaitForSecondsCoroutine(300));
+        timerStarted = true;
     }
 
-    private IEnumerator WaitForSecondsCoroutine(int val)
+    void Update()
     {
-        yield return new WaitForSeconds(val);
-        // 5min have passed, game's over
-        gameOver = true;
+        if (timerStarted)
+        {
+            if (totalTime > 0)
+            {
+                totalTime -= Time.deltaTime;
+                displayTimeLeft.text = timeTxt + (int)Math.Ceiling(totalTime);
+            }
+            else
+            {
+                gameOver = true;
+                totalTime = 0;
+                displayTimeLeft.text = timeTxt + "0";
+                timerStarted = false;
+            }
+        }
     }
 }

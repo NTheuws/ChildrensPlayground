@@ -60,11 +60,25 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (isMovingLeft)
         {
-            transform.position += transform.right * -(horizontalSpeed/2)* Time.deltaTime;
+            if (tutorialCollisions)
+            {
+                transform.position += transform.right * -horizontalSpeed * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += transform.right * -(horizontalSpeed / 2) * Time.deltaTime;
+            }
         }
         else if (isMovingRight)
         {
-            transform.position += transform.right * (horizontalSpeed + idleSpeed)* Time.deltaTime;
+            if (tutorialCollisions)
+            {
+                transform.position += transform.right * horizontalSpeed * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += transform.right * (horizontalSpeed + idleSpeed) * Time.deltaTime;
+            }
         }
         // If not in tutorial make sure the character stays neutral when the player is not moving.
         else if (!tutorialCollisions)
@@ -124,8 +138,17 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 disableHalfBlock();
             }
-
-            rb.AddForce(Vector2.up * upwardsVelocity, ForceMode2D.Impulse);
+            // Move upwards
+            // In the tutorial everything is larger so the jump will have to be as well.
+            if (tutorialCollisions)
+            {
+                rb.AddForce(Vector2.up * upwardsVelocity, ForceMode2D.Impulse);
+            }
+            // The actual game is small and the player wont just as high.
+            else
+            {
+                rb.AddForce(Vector2.up * upwardsVelocity/4f, ForceMode2D.Impulse);
+            }
         }
     }
     // Player is crouching.

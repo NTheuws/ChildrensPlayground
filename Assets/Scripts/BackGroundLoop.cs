@@ -14,6 +14,8 @@ public class BackGroundLoop : MonoBehaviour
     public float choke;
     public GameTimer gameTimer;
 
+    public GameObject background;
+
     private float movingSpeed = 2f;
 
     private bool StartMoving = false;
@@ -64,6 +66,7 @@ public class BackGroundLoop : MonoBehaviour
         if (StartMoving)
         {
             transform.position += Vector3.right * Time.deltaTime * movingSpeed;
+            background.transform.position += Vector3.right * Time.deltaTime * movingSpeed;
         }
     }
 
