@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     // JumpEvent.
-    public delegate void DisableHalfBlock();
+    public delegate void DisableHalfBlock(Collider2D playerColliders);
     public static event DisableHalfBlock disableHalfBlock;
 
     private Rigidbody2D rb;
@@ -135,7 +135,8 @@ public class PlayerBehaviour : MonoBehaviour
             // Invoke event.
             if (disableHalfBlock != null)
             {
-                disableHalfBlock();
+                Collider2D collider = this.GetComponent<Collider2D>();
+                disableHalfBlock(collider);
             }
             // Move upwards
             // In the tutorial everything is larger so the jump will have to be as well.
@@ -160,7 +161,8 @@ public class PlayerBehaviour : MonoBehaviour
         // Invoke event.
         if (disableHalfBlock != null)
         {
-            disableHalfBlock();
+            Collider2D collider = this.GetComponent<Collider2D>();
+            disableHalfBlock(collider);
         }
 
         isDropping = true;

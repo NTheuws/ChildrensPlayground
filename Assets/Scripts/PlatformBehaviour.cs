@@ -28,7 +28,7 @@ public class PlatformBehaviour : MonoBehaviour
         PlayerBehaviour.disableHalfBlock += HalfBlockCollisionJump;
     }
 
-    private void HalfBlockCollisionJump()
+    private void HalfBlockCollisionJump(Collider2D playerCollider)
     {
         switch (platformType)
         {
@@ -38,8 +38,9 @@ public class PlatformBehaviour : MonoBehaviour
                 break;
             // Wooden platform.
             case 1:
-                GetComponent<Collider2D>().enabled = false;
-                StartCoroutine(WaitABit());
+                Physics2D.IgnoreCollision(playerCollider, this.GetComponent<Collider2D>());
+                //GetComponent<Collider2D>().enabled = false;
+                StartCoroutine(WaitABit(playerCollider));
                 break;
             // Empty space.
             case 2:
@@ -130,12 +131,13 @@ public class PlatformBehaviour : MonoBehaviour
         }
     }
 
-    IEnumerator WaitABit()
+    IEnumerator WaitABit(Collider2D playerCollider)
     {
         if (platformType == 1)
         {
             yield return new WaitForSeconds(0.6f);
-            GetComponent<Collider2D>().enabled = true;
+            //GetComponent<Collider2D>().enabled = true;
+            Physics2D.IgnoreCollision(playerCollider, GetComponent<Collider2D>(), false);
         }
     }
 }
