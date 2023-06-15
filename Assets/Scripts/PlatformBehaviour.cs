@@ -133,10 +133,10 @@ public class PlatformBehaviour : MonoBehaviour
 
     IEnumerator WaitABit(Collider2D playerCollider)
     {
-        if (platformType == 1)
+        // Toggle collider between half platform and player off for 0.6s.
+        if (platformType == 1 && playerCollider != null)
         {
             yield return new WaitForSeconds(0.6f);
-            //GetComponent<Collider2D>().enabled = true;
             Physics2D.IgnoreCollision(playerCollider, GetComponent<Collider2D>(), false);
         }
     }

@@ -53,6 +53,6 @@ public class IntroHandler : MonoBehaviour
         CountDown.text = "";
         yield return new WaitForSeconds(val);
         // Switch scene.
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("Tutorial");
     }
 }

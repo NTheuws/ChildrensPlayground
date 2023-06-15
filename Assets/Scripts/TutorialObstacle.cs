@@ -9,7 +9,6 @@ public class TutorialObstacle : MonoBehaviour
     private Vector3 startPos;
     public bool started = false;
     public bool hitPlayer = false;
-    private float pausePointX = 1.6f;
     public bool ObstacleDone = false;
 
     void Start()

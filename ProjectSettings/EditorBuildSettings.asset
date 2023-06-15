@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/IntroScene.unity
     guid: 063ffe6bbb099d24aae3d32b19aac61f
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
+    path: Assets/Scenes/Tutorial.unity
     guid: 40523e9cb4c03ea46baeee0da3bcf262
   - enabled: 1
     path: Assets/Scenes/MainGame.unity
