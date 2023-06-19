@@ -364,8 +364,8 @@ public class JumpDetection : MonoBehaviour
                         break;
                     case 1:
                         // Spawn p2.
-                        player2 = (PlayerBehaviour)Instantiate(playerPrefab);
-                        tutorial.totalPlayers++;
+                        //player2 = (PlayerBehaviour)Instantiate(playerPrefab);
+                        //tutorial.totalPlayers++;
                         break;
                 }
                 return;

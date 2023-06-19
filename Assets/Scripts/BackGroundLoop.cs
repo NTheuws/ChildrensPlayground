@@ -18,7 +18,10 @@ public class BackGroundLoop : MonoBehaviour
 
     private float movingSpeed = 2f;
 
-    private bool StartMoving = false;
+    private bool startMoving = false;
+
+    // Amount of platforms that are to remain empty at the beginning.
+    private int clearStartArea = 32;
     void Start()
     {
         mainCamera = gameObject.GetComponent<Camera>();
@@ -58,12 +61,12 @@ public class BackGroundLoop : MonoBehaviour
         gameTimer.StartTimer();
 
         // Allow the game to move.
-        StartMoving = true;
+        startMoving = true;
     }
 
     private void Update()
     {
-        if (StartMoving)
+        if (startMoving)
         {
             transform.position += Vector3.right * Time.deltaTime * movingSpeed;
             background.transform.position += Vector3.right * Time.deltaTime * movingSpeed;
@@ -108,7 +111,14 @@ public class BackGroundLoop : MonoBehaviour
          */
         int platformType = -1;
         float ran = Random.Range(1, 100);
-        
+
+        // If the platform is supposed to remain empty move the random value to said range.
+        if (clearStartArea != 0)
+        {
+            clearStartArea--;
+            ran = 90;
+        }
+
         if (ran <= 65)
         {
             obj.GetComponent<SpriteRenderer>().sprite = platforms[0];
