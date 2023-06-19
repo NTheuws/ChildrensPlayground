@@ -109,6 +109,7 @@ public class BackGroundLoop : MonoBehaviour
          * 1: wooden platform
          * 2: gap
          */
+        bool spawnSomething = true;
         int platformType = -1;
         float ran = Random.Range(1, 100);
 
@@ -116,6 +117,8 @@ public class BackGroundLoop : MonoBehaviour
         if (clearStartArea != 0)
         {
             clearStartArea--;
+            //Dont spawn anything.
+            spawnSomething = false;
             ran = 90;
         }
 
@@ -142,12 +145,15 @@ public class BackGroundLoop : MonoBehaviour
             // Set platformtype for collisions.
             platform.ChangePlatformType(platformType);
 
-            platform.AttemptSpawn(false);
-
-            // If its the first floor itll also generate for the bottom floor.
-            if (obj.tag == "Platform1")
+            if (spawnSomething)
             {
-                platform.AttemptSpawn(true);
+                platform.AttemptSpawn(false);
+
+                // If its the first floor itll also generate for the bottom floor.
+                if (obj.tag == "Platform1")
+                {
+                    platform.AttemptSpawn(true);
+                }
             }
         }
     }

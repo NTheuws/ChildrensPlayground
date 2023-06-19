@@ -26,6 +26,12 @@ public class PlatformBehaviour : MonoBehaviour
     {
         currentLocation = transform.position;
         PlayerBehaviour.disableHalfBlock += HalfBlockCollisionJump;
+
+        //// If this platform is empty, disable hitbox.
+        //if (platformType == 2)
+        //{
+        //    GetComponent<Collider2D>().enabled = false;
+        //}
     }
 
     private void HalfBlockCollisionJump(Collider2D playerCollider)
