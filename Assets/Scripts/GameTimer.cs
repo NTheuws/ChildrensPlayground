@@ -10,7 +10,7 @@ public class GameTimer : MonoBehaviour
 {
     private bool timerStarted = false;
     public bool gameOver = false;
-    private float totalTime = 30;
+    private float totalTime = 120;
 
     // To display the current time left in seconds.
     public TMP_Text displayTimeLeft;

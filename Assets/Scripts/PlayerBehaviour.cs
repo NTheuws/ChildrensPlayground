@@ -84,11 +84,6 @@ public class PlayerBehaviour : MonoBehaviour
         {
             transform.position += transform.right * idleSpeed * Time.deltaTime;
         }
-        // For test purposes, when pressing space the player jumps.
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            PlayerJump();
-        }
 
         // Check player movement.
         Vector2 movement = rb.velocity;
@@ -154,6 +149,7 @@ public class PlayerBehaviour : MonoBehaviour
     // Player is crouching.
     public void PlayerCrouch()
     {
+        isGrounded = false;
         if (tutorialCollisions)
         {
             FloorCollidersToggle(true);

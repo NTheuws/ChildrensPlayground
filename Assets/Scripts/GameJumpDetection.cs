@@ -257,7 +257,6 @@ public class GameJumpDetection : MonoBehaviour
                         // Create player.
                         player2 = (PlayerBehaviour)Instantiate(playerPrefab2);
                         Vector2 spawnPoint = new Vector3(GameObject.Find("Camera").GetComponent<BackGroundLoop>().spawnPoint.transform.position.x, player2.transform.position.y, player2.transform.position.z);
-                        Debug.Log(spawnPoint);
                         player2.transform.position = spawnPoint;
                     }
                 }
@@ -274,7 +273,6 @@ public class GameJumpDetection : MonoBehaviour
                         // Create player.
                         player3 = (PlayerBehaviour)Instantiate(playerPrefab3);
                         Vector3 spawnPoint = new Vector3(GameObject.Find("Camera").GetComponent<BackGroundLoop>().spawnPoint.transform.position.x, player3.transform.position.y, player3.transform.position.z);
-                        Debug.Log(spawnPoint);
                         player3.transform.position = spawnPoint;
                     }
                 }

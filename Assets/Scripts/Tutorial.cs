@@ -62,7 +62,7 @@ public class Tutorial : MonoBehaviour
                 break;
             case 5:
                 currentScore.text = "Punten: 0";
-                instructionsText.text = "Tickets geven je punten.";
+                instructionsText.text = "Kaartjes geven je punten.";
                 pointObject.started = true;
                 if (pointObject.hitPlayer)
                 {
@@ -119,7 +119,7 @@ public class Tutorial : MonoBehaviour
                         break;
                     // Move down
                     case 2:
-                        if (action == Actions.PlayerActions.Crouch)
+                        if (action == Actions.PlayerActions.Crouch && player.isGrounded)
                         {
                             player.PlayerCrouch();
                             // Toggle player in array.
@@ -144,8 +144,9 @@ public class Tutorial : MonoBehaviour
                             succeededPlayers[playerNumber - 1] = 1;
                         }
                         break;
-                    // Collect coin
+                    // Collect tickets
                     case 5:
+                        break;
                     // Getting hit by obstacle
                     case 6:
                         // Option to dodge, when dodged skip step 7.
