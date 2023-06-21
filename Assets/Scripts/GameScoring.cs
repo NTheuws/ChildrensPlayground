@@ -5,18 +5,14 @@ using UnityEngine;
 
 public class GameScoring : MonoBehaviour
 {
-    private int gameScore = 0;
+    public static int highScore = 0;
+    public static int gameScore = 0;
     public TMP_Text displayTotalScore;
     private string scoreTxt = "Punten: ";
 
-    void Start()
+    public void UpdateText()
     {
-        
-    }
-
-    void Update()
-    {
-        
+        displayTotalScore.text = scoreTxt + gameScore.ToString();
     }
 
     public void PointScored(int val)
@@ -28,5 +24,11 @@ public class GameScoring : MonoBehaviour
             gameScore= 0;
         }    
         displayTotalScore.text = scoreTxt + gameScore.ToString();
+    }
+
+    // Reset the score back to 0;
+    public void ResetScore()
+    {
+        gameScore = 0;
     }
 }

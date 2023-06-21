@@ -475,9 +475,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 32.51334, y: -771.6817, z: -0.00022499994}
+    m_Target: {x: 705.6052, y: 784.6903, z: -7.690141}
     speed: 2
-    m_Value: {x: 32.51334, y: -771.6817, z: -0.00022499994}
+    m_Value: {x: 705.6052, y: 784.6903, z: -7.690141}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -528,9 +528,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 0.4217198
+    m_Target: 1461.5117
     speed: 2
-    m_Value: 0.4217198
+    m_Value: 1461.5117
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -583,7 +583,7 @@ MonoBehaviour:
   - {fileID: 9}
   - {fileID: 10}
   m_Selected: 0
-  m_LastSelected: 2
+  m_LastSelected: 1
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -646,8 +646,8 @@ MonoBehaviour:
   m_MipLevel: 0
   m_Zoom: -1
   m_ScrollPosition: {x: 0, y: 0}
-  m_SelectedObject: {fileID: 0}
-  m_SelectedSpriteRectGUID: 00000000000000000000000000000000
+  m_SelectedObject: {fileID: 1461601175540976288, guid: 34b91619a12ca5a41b8eaa0e00474cfc, type: 3}
+  m_SelectedSpriteRectGUID: 5e97eb03825dee720800000000000000
   m_LastUsedModuleTypeName: UnityEditor.U2D.Sprites.SpriteFrameModule
 --- !u!114 &10
 MonoBehaviour:
@@ -874,7 +874,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 1203
+  controlID: 13897
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -933,9 +933,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 60760000
+      m_SelectedIDs: e2670100
       m_LastClickedID: 0
-      m_ExpandedIDs: 84c2ffff16cbffffeaceffffded7ffffecd7ffffe8e0ffffbaeeffff2cf6ffffb0f7ffffe0f9ffff2afbffff
+      m_ExpandedIDs: d63bffff4c56ffff0458ffff0467ffff5e68ffffc66dffff7a6effff0e74ffff5674fffff886ffffb087ffff9e88ffff1a89ffff188affffda8affff688bfffff48bfffff28cffff4690ffff6292ffffa093fffff293ffff8e95ffffb695ffffc695ffff5496ffff84c2ffff16cbffffeaceffffded7ffffecd7ffffe8e0ffffbaeeffff2cf6ffffb0f7ffffe0f9ffff2afbffff222601003e26010020280100702801003e2e0100702f01009e49010032530100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -969,7 +969,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -978,14 +978,14 @@ MonoBehaviour:
     y: 0
     width: 781.60004
     height: 298
-  m_MinSize: {x: 232, y: 271}
-  m_MaxSize: {x: 10002, y: 10021}
-  m_ActualView: {fileID: 15}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
+  m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 15}
   - {fileID: 16}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1028,21 +1028,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Prefabs
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 50
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Prefabs
   m_LastFoldersGridSize: 50
   m_LastProjectPath: C:\Users\Niels\Documents\GitHub\ChildrensPlayground
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 3}
-    m_SelectedIDs: c0660000
-    m_LastClickedID: 26304
+    m_SelectedIDs: 2e720000
+    m_LastClickedID: 29230
     m_ExpandedIDs: 000000006464000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1096,8 +1096,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 60760000
-    m_LastClickedInstanceID: 30304
+    m_SelectedInstanceIDs: e2670100
+    m_LastClickedInstanceID: 92130
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000000000005e6500000265000014650000ec5d0000205e0000
     m_RenameOverlay:

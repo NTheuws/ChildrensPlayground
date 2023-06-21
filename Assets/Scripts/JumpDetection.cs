@@ -283,27 +283,7 @@ public class JumpDetection : MonoBehaviour
                         player1.isMovingLeft = false;
                         player1.isMovingRight = false;
                     }
-
                 }
-                //// Player 2.
-                //if (PlayerIDs[1] != 0 && player2 != null)
-                //{
-                //    // Initializing player
-                //    if (body.TrackingId == PlayerIDs[1] && !_Initialized2)
-                //    {
-                //        //Set initial point
-                //        restPoint2 = point;
-                //        _Initialized2 = true;
-                //    }
-                //    // Player jumped
-                //    if (point.y > restPoint2.y + 1)
-                //    {
-                //        if (body.TrackingId == PlayerIDs[1])
-                //        {
-                //            player2.PlayerJump();
-                //        }
-                //    }
-                //}
             }
         }
         return point;

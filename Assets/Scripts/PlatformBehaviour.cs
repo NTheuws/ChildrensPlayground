@@ -145,4 +145,8 @@ public class PlatformBehaviour : MonoBehaviour
             }
         }
     }
+    private void OnDestroy()
+    {
+        PlayerBehaviour.disableHalfBlock -= HalfBlockCollisionJump;
+    }
 }
