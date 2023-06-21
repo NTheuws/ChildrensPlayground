@@ -26,12 +26,6 @@ public class PlatformBehaviour : MonoBehaviour
     {
         currentLocation = transform.position;
         PlayerBehaviour.disableHalfBlock += HalfBlockCollisionJump;
-
-        //// If this platform is empty, disable hitbox.
-        //if (platformType == 2)
-        //{
-        //    GetComponent<Collider2D>().enabled = false;
-        //}
     }
 
     private void HalfBlockCollisionJump(Collider2D playerCollider)
@@ -45,8 +39,10 @@ public class PlatformBehaviour : MonoBehaviour
             // Wooden platform.
             case 1:
                 Physics2D.IgnoreCollision(playerCollider, this.GetComponent<Collider2D>());
-                //GetComponent<Collider2D>().enabled = false;
-                StartCoroutine(WaitABit(playerCollider));
+                if (playerCollider != null && GetComponent<Collider2D>() != null)
+                {
+                    StartCoroutine(WaitABit(playerCollider));
+                }
                 break;
             // Empty space.
             case 2:
@@ -140,10 +136,13 @@ public class PlatformBehaviour : MonoBehaviour
     IEnumerator WaitABit(Collider2D playerCollider)
     {
         // Toggle collider between half platform and player off for 0.6s.
-        if (platformType == 1 && playerCollider != null && GetComponent<Collider2D>() != null)
+        if (platformType == 1)
         {
             yield return new WaitForSeconds(0.6f);
-            Physics2D.IgnoreCollision(playerCollider, GetComponent<Collider2D>(), false);
+            if (playerCollider != null)
+            {
+                Physics2D.IgnoreCollision(playerCollider, GetComponent<Collider2D>(), false);
+            }
         }
     }
 }

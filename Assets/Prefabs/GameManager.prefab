@@ -45,9 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BoneMaterial: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
-  BodySourceManager: {fileID: 0}
+  BodySourceManager: {fileID: 7643270417217749421, guid: c469d83cfc8ab1f4383fd389ffdcde50, type: 3}
   restPoint1: {x: 0, y: 0, z: 0}
   player1: {fileID: 2446738941452614438, guid: 48fdf15fad241cd499e25096ec7a1fd4, type: 3}
   player2: {fileID: 123178446943259608, guid: b12f3ab70740a994989559170d92d1d0, type: 3}
+  player3: {fileID: 2446738941452614438, guid: b7a0d80b008f4d54ca5b9b9092e08ffc, type: 3}
+  player4: {fileID: 2446738941452614438, guid: 0d6464dcf341c4e41a0f59c5019fff66, type: 3}
   playerPrefab1: {fileID: 2446738941452614438, guid: 48fdf15fad241cd499e25096ec7a1fd4, type: 3}
   playerPrefab2: {fileID: 123178446943259608, guid: b12f3ab70740a994989559170d92d1d0, type: 3}
+  playerPrefab3: {fileID: 2446738941452614438, guid: b7a0d80b008f4d54ca5b9b9092e08ffc, type: 3}
+  playerPrefab4: {fileID: 2446738941452614438, guid: 0d6464dcf341c4e41a0f59c5019fff66, type: 3}

@@ -19,12 +19,20 @@ public class GameJumpDetection : MonoBehaviour
 
     private bool _Initialized1 = false;
     private bool _Initialized2 = false;
+    private bool _Initialized3 = false;
+    private bool _Initialized4 = false;
     public Vector3 restPoint1 = new Vector3(0, 0, 0);
     private Vector3 restPoint2 = new Vector3(0, 0, 0);
+    private Vector3 restPoint3 = new Vector3(0, 0, 0);
+    private Vector3 restPoint4 = new Vector3(0, 0, 0);
     public PlayerBehaviour player1;
     public PlayerBehaviour player2;
+    public PlayerBehaviour player3;
+    public PlayerBehaviour player4;
     public PlayerBehaviour playerPrefab1;
     public PlayerBehaviour playerPrefab2;
+    public PlayerBehaviour playerPrefab3;
+    public PlayerBehaviour playerPrefab4;
 
     private List<ulong> _PlayerIds = new List<ulong>();
     private ulong[] PlayerIDs = { 0, 0, 0, 0 };
@@ -137,7 +145,7 @@ public class GameJumpDetection : MonoBehaviour
         GameObject body = new GameObject("Body:" + id);
 
         // Add ID into the array and spawn in player.
-        InsertIntoFirstEmptySlot(id);
+        //InsertIntoFirstEmptySlot(id);
         for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
         {
             GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -207,54 +215,110 @@ public class GameJumpDetection : MonoBehaviour
         // If the joint matches the tracked one.
         if (joint.JointType == Kinect.JointType.SpineShoulder)
         {
-            //// Player 1.
-            //if (PlayerIDs[0] != 0 && player1 != null)
-            //{
-            //    if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
-            //    {
-            //        //Set initial point.
-            //        restPoint1 = point;
-            //        _Initialized1 = true;
-            //    }
-            //    MovementDefiner(restPoint1, point, player1);
-            //}
-            //// Player 2.
-            //if (PlayerIDs[1] != 0 && player2 != null)
-            //{
-            //    if (body.TrackingId == PlayerIDs[0] && !_Initialized1)
-            //    {
-            //        //Set initial point.
-            //        restPoint2 = point;
-            //        _Initialized2 = true;
-            //    }
-            //    MovementDefiner(restPoint2, point, player2);
-            //}
-            // Player 1.
-            if (body.TrackingId == PlayerIDs[0])
+            // Check if the ID is known.
+            bool isKnown = false;
+            foreach (ulong player in PlayerIDs)
             {
-                if (PlayerIDs[0] != 0 && player1 != null)
+                if (player == body.TrackingId)
                 {
-                    if (!_Initialized1)
-                    {
-                        //Set initial point.
-                        restPoint1 = point;
-                        _Initialized1 = true;
-                    }
-                    MovementDefiner(restPoint1, point, player1);
+                    isKnown = true;
                 }
             }
-            else if (body.TrackingId == PlayerIDs[1])
+            // When the skeleton has been detected for the first time.
+            if (!isKnown)
             {
-                if (PlayerIDs[1] != 0 && player2 != null)
+                // Most left / player 1.
+                if (joint.Position.X >= -1.1 && joint.Position.X < -0.7)
+                {
+                    // First time registering.
+                    if (!_Initialized1)
+                    {
+                        // Set initial point.
+                        restPoint1 = point;
+                        _Initialized1 = true;
+                        // Link player to correct playerslot.
+                        PlayerIDs[0] = body.TrackingId;
+                        // Create player.
+                        player1 = (PlayerBehaviour)Instantiate(playerPrefab1);
+                        Vector2 spawnPoint = new Vector3(GameObject.Find("Camera").GetComponent<BackGroundLoop>().spawnPoint.transform.position.x, player1.transform.position.y, player1.transform.position.z);
+                        player1.transform.position = spawnPoint;
+                    }
+                }
+                // 2nd left / player 2.
+                else if (joint.Position.X >= -0.7 && joint.Position.X < -0.3)
                 {
                     if (!_Initialized2)
                     {
-                        //Set initial point.
+                        // Set initial point.
                         restPoint2 = point;
                         _Initialized2 = true;
+                        // Link player to correct playerslot.
+                        PlayerIDs[1] = body.TrackingId;
+                        // Create player.
+                        player2 = (PlayerBehaviour)Instantiate(playerPrefab2);
+                        Vector2 spawnPoint = new Vector3(GameObject.Find("Camera").GetComponent<BackGroundLoop>().spawnPoint.transform.position.x, player2.transform.position.y, player2.transform.position.z);
+                        Debug.Log(spawnPoint);
+                        player2.transform.position = spawnPoint;
                     }
-                    MovementDefiner(restPoint2, point, player2);
                 }
+                // 2nd right / player 3.
+                else if (joint.Position.X >= -0.3 && joint.Position.X < 0.1)
+                {
+                    if (!_Initialized3)
+                    {
+                        // Set initial point.
+                        restPoint3 = point;
+                        _Initialized3 = true;
+                        // Link player to correct playerslot.
+                        PlayerIDs[2] = body.TrackingId;
+                        // Create player.
+                        player3 = (PlayerBehaviour)Instantiate(playerPrefab3);
+                        Vector3 spawnPoint = new Vector3(GameObject.Find("Camera").GetComponent<BackGroundLoop>().spawnPoint.transform.position.x, player3.transform.position.y, player3.transform.position.z);
+                        Debug.Log(spawnPoint);
+                        player3.transform.position = spawnPoint;
+                    }
+                }
+                // Most right / player 4.
+                else if (joint.Position.X >= 0.1 && joint.Position.X <= 0.5)
+                {
+                    if (!_Initialized4)
+                    {
+                        // Set initial point.
+                        restPoint4 = point;
+                        _Initialized4 = true;
+                        // Link player to correct playerslot.
+                        PlayerIDs[3] = body.TrackingId;
+                        // Create player.
+                        player4 = (PlayerBehaviour)Instantiate(playerPrefab4);
+                        Vector2 spawnPoint = new Vector3(GameObject.Find("Camera").GetComponent<BackGroundLoop>().spawnPoint.transform.position.x, player4.transform.position.y, player4.transform.position.z);
+                        player4.transform.position = spawnPoint;
+                    }
+                }
+
+                if (_Initialized1 || _Initialized2 || _Initialized3 || _Initialized4)
+                {
+                    // Start the game.
+                    BackGroundLoop background = (BackGroundLoop)FindObjectOfType<BackGroundLoop>();
+                    background.GameStarted();
+                }
+            }
+
+            // Move players.
+            if (body.TrackingId == PlayerIDs[0])
+            {
+                MovementDefiner(restPoint1, point, player1);
+            }
+            else if (body.TrackingId == PlayerIDs[1])
+            {
+                MovementDefiner(restPoint2, point, player2);
+            }
+            else if (body.TrackingId == PlayerIDs[2])
+            {
+                MovementDefiner(restPoint3, point, player3);
+            }
+            else if (body.TrackingId == PlayerIDs[3])
+            {
+                MovementDefiner(restPoint4, point, player4);
             }
         }
         return point;
@@ -297,45 +361,6 @@ public class GameJumpDetection : MonoBehaviour
         }
     }
 
-    /* These methods are used to track the skeletons and link them to the correct player.
-     * When spawning in a skeleton it'll have a personal ID linked to it.
-     * This ID will be saved in an array slot which corresponds to a character.
-     */
-
-    // Called when a new skeleton has been detected.
-    // in: val being the skeleton ID
-    private void InsertIntoFirstEmptySlot(ulong val)
-    {
-        int index = 0;
-        foreach (ulong id in PlayerIDs)
-        {
-            // Check for the first spot of the array thats emtpy.
-            if (id == 0)
-            {
-                // Insert the skeleton's ID into the array.
-                PlayerIDs[index] = val;
-                switch (index)
-                {
-                    case 0:
-                        // Spawn p1 and start the game
-                        player1 = (PlayerBehaviour)Instantiate(playerPrefab1);
-                        player1.transform.position = new Vector2(player1.transform.position.x + 4f, player1.transform.position.y);
-                        // Start moving the game.
-                        BackGroundLoop background = (BackGroundLoop)FindObjectOfType<BackGroundLoop>();
-                        background.GameStarted();
-                        break;
-                    case 1:
-                        // Spawn p2.
-                        player2 = (PlayerBehaviour)Instantiate(playerPrefab2);
-                        player2.transform.position = new Vector2(player1.transform.position.x + 4f, player1.transform.position.y);
-                        break;
-                }
-                return;
-            }
-            index++;
-        }
-    }
-
     // Called when a skeleton is no longer detected.
     // IN: val being the skeletons ID
     private void RemoveFromSlot(ulong val)
@@ -359,6 +384,16 @@ public class GameJumpDetection : MonoBehaviour
                         player2.RemovePlayer();
                         player2 = null;
                         _Initialized2 = false;
+                        break;
+                    case 2:
+                        player3.RemovePlayer();
+                        player3 = null;
+                        _Initialized3 = false;
+                        break;
+                    case 3:
+                        player4.RemovePlayer();
+                        player4 = null;
+                        _Initialized4 = false;
                         break;
                 }
             }

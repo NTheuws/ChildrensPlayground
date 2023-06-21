@@ -16,6 +16,8 @@ public class BackGroundLoop : MonoBehaviour
 
     public GameObject background;
 
+    public GameObject spawnPoint;
+
     private float movingSpeed = 2f;
 
     private bool startMoving = false;
@@ -70,6 +72,7 @@ public class BackGroundLoop : MonoBehaviour
         {
             transform.position += Vector3.right * Time.deltaTime * movingSpeed;
             background.transform.position += Vector3.right * Time.deltaTime * movingSpeed;
+            spawnPoint.transform.position += Vector3.right * Time.deltaTime * movingSpeed;
         }
     }
 
