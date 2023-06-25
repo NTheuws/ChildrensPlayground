@@ -9,8 +9,6 @@ public class TreeBackgroundLoop : MonoBehaviour
     private Vector2 screenBounds;
     public float choke;
 
-    private float movingSpeed = 3f;
-
     // Start is called before the first frame update
     void Start()
     {

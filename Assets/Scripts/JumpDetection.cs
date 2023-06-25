@@ -153,10 +153,8 @@ public class JumpDetection : MonoBehaviour
             #pragma warning disable CS0618 // Type or member is obsolete
             lr.SetVertexCount(2);
             lr.SetWidth(0f, 0f);
-            //lr.SetWidth(0.05f, 0.05f);
             #pragma warning restore CS0618 // Type or member is obsolete
             jointObj.transform.localScale = new Vector3(0f, 0f, 0f);
-            //jointObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             jointObj.name = jt.ToString();
             jointObj.transform.parent = body.transform;
         }
@@ -340,12 +338,9 @@ public class JumpDetection : MonoBehaviour
                         player1.transform.position = new Vector2(player1.transform.position.x + 4f, player1.transform.position.y);
 
                         tutorial.totalPlayers++;
-                        //obstacle.started = true;
                         break;
                     case 1:
                         // Spawn p2.
-                        //player2 = (PlayerBehaviour)Instantiate(playerPrefab);
-                        //tutorial.totalPlayers++;
                         break;
                 }
                 return;
@@ -372,13 +367,11 @@ public class JumpDetection : MonoBehaviour
                         player1.RemovePlayer();
                         player1 = null;
                         _Initialized1 = false;
-                        //tutorial.totalPlayers--;
                         break;
                     case 1:
                         player2.RemovePlayer();
                         player2 = null;
                         _Initialized2 = false;
-                        //tutorial.totalPlayers--;
                         break;
                 }
             }

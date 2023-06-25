@@ -8,25 +8,27 @@ using UnityEngine.U2D;
 
 public class BackGroundLoop : MonoBehaviour
 {
+    // Different sprites that can be used for the platforms.
     public Sprite[] platforms;
+    // All different platforms that need to be repeated.
     public GameObject[] levels;
+
     private Camera mainCamera;
     private Vector2 screenBounds;
     public float choke;
     public GameTimer gameTimer;
 
     public GameObject background;
-
     public GameObject spawnPoint;
 
     private float movingSpeed = 2f;
-
     private bool startMoving = false;
 
     // Amount of platforms that are to remain empty at the beginning.
     private int clearStartArea = 32;
     void Start()
     {
+        // Get camera component.
         mainCamera = gameObject.GetComponent<Camera>();
         screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
 
@@ -58,6 +60,8 @@ public class BackGroundLoop : MonoBehaviour
         Destroy(clone);
         Destroy(obj.GetComponent<SpriteRenderer>());
     }
+
+    // Only start moving the screen when the game has been started.
     public void GameStarted()
     {
         // Start the timer.
@@ -69,6 +73,7 @@ public class BackGroundLoop : MonoBehaviour
 
     private void Update()
     {
+        // Move the neccesary objects only when the game started.
         if (startMoving)
         {
             transform.position += Vector3.right * Time.deltaTime * movingSpeed;
@@ -79,6 +84,7 @@ public class BackGroundLoop : MonoBehaviour
 
     private void LateUpdate()
     {
+        // Make sure there are no gaps in betweeen sprites.
         foreach (GameObject obj in levels)
         {
             RepositionChildren(obj);
@@ -126,6 +132,7 @@ public class BackGroundLoop : MonoBehaviour
             ran = 90;
         }
 
+        // Random chances of being 1 of the 3 options.
         if (ran <= 65)
         {
             obj.GetComponent<SpriteRenderer>().sprite = platforms[0];

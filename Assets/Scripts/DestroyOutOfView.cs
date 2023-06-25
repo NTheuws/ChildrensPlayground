@@ -13,7 +13,7 @@ public class DestroyOutOfView : MonoBehaviour
         mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
     }
 
-    // Update is called once per frame
+    // Remove the objects which go out of the camer's view on the left side to prevent the game from taking more and more resources.
     void Update()
     {
         Vector2 screenPosition = mainCamera.WorldToScreenPoint(transform.position);

@@ -17,14 +17,17 @@ public class GameJumpDetection : MonoBehaviour
     private Dictionary<ulong, GameObject> _Bodies = new Dictionary<ulong, GameObject>();
     private BodySourceManager _BodyManager;
 
+    // If the player has been found yet.
     private bool _Initialized1 = false;
     private bool _Initialized2 = false;
     private bool _Initialized3 = false;
     private bool _Initialized4 = false;
+    // Point on which the players were standing at the beginning of the game.
     public Vector3 restPoint1 = new Vector3(0, 0, 0);
     private Vector3 restPoint2 = new Vector3(0, 0, 0);
     private Vector3 restPoint3 = new Vector3(0, 0, 0);
     private Vector3 restPoint4 = new Vector3(0, 0, 0);
+    // Data for the player's direct gameobject.
     public PlayerBehaviour player1;
     public PlayerBehaviour player2;
     public PlayerBehaviour player3;
@@ -34,7 +37,7 @@ public class GameJumpDetection : MonoBehaviour
     public PlayerBehaviour playerPrefab3;
     public PlayerBehaviour playerPrefab4;
 
-    private List<ulong> _PlayerIds = new List<ulong>();
+    // Skeleton ID which was given to the player by the Kinect.
     private ulong[] PlayerIDs = { 0, 0, 0, 0 };
 
 
@@ -151,11 +154,11 @@ public class GameJumpDetection : MonoBehaviour
             GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
             LineRenderer lr = jointObj.AddComponent<LineRenderer>();
             lr.material = BoneMaterial;
-#pragma warning disable CS0618 // Type or member is obsolete
+            #pragma warning disable CS0618 // Type or member is obsolete
             lr.SetVertexCount(2);
             lr.SetWidth(0f, 0f);
             //lr.SetWidth(0.05f, 0.05f);
-#pragma warning restore CS0618 // Type or member is obsolete
+            #pragma warning restore CS0618 // Type or member is obsolete
             jointObj.transform.localScale = new Vector3(0f, 0f, 0f);
             //jointObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             jointObj.name = jt.ToString();
@@ -184,9 +187,9 @@ public class GameJumpDetection : MonoBehaviour
             {
                 lr.SetPosition(0, jointObj.localPosition);
                 lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value, body));
-#pragma warning disable CS0618 // Type or member is obsolete
+                #pragma warning disable CS0618 // Type or member is obsolete
                 lr.SetColors(GetColorForState(sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
-#pragma warning restore CS0618 // Type or member is obsolete
+                #pragma warning restore CS0618 // Type or member is obsolete
             }
             else
             {

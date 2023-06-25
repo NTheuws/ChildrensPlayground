@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Actions : MonoBehaviour
 {
+    // These are the different options the players have to control their character.
+
+
     // Pass the action through.
     [Flags]
     public enum PlayerActions

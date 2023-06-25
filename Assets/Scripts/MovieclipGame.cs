@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovieclipGame : MonoBehaviour
 {
+    // Point value of the obstacle.
     private int clipValue = -3;
 
     // On contact remove object and add 1 to the score.

@@ -97,6 +97,7 @@ public class ScoreTracker : MonoBehaviour
             totalTime -= Time.deltaTime;
             countdownText.text = countdown + Math.Round(totalTime);
         }
+        // If timer ended start a new game.
         else
         {
             countdownText.text = countdown + totalTime;
