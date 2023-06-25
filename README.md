@@ -1,13 +1,11 @@
 # Children's Playground
-
-![afbeelding](https://github.com/NTheuws/ChildrensPlayground/assets/43367956/19e77393-a998-419d-abbd-30edc2b6e938)
-
-
 ## Why this project?
 This project was requested by Natlab to Fontys, Open Learning. The issue they were dealing was was as follows: After kids have been watched a movie and their parents/grandparents wanted to sit down and have a drink after. The kids would be too energetic and start running around, annoying other visitors. Something had to be created to entertain the kids so their parents could relax which is why the project "Children's playground". This is a proof of concept of that.
 
 ## What is it?
 This take on the playground is creating a platformer game where the kids have to move their own body in order to move their character in the game. it consists of multiple platforms on different levels which the plays can jump on in order to collect points and avoid obstacles and can be played with up to 4 players.
+
+![afbeelding](https://github.com/NTheuws/ChildrensPlayground/assets/43367956/19e77393-a998-419d-abbd-30edc2b6e938)
 
 ## What does it do?
 Right now the game consists of an intro scene, tutorial, the game itself and a score screen.
