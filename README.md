@@ -31,6 +31,7 @@ For this project a couple of things have been used and will be neccesary to be a
 The setup is fairly simple, make sure the players can see the screen on which the game will be displayed on. Then place the Kinect in front of the screen and make sure it points towards the players.
 The neccesary SDK for the Kinect can be found [here](https://learn.microsoft.com/en-us/windows/apps/design/devices/kinect-for-windows).
 Footsteps illustrate the players, the screen and Kinect are self explanatory:
+
 ![afbeelding](https://github.com/NTheuws/ChildrensPlayground/assets/43367956/192e3cff-3de2-4afc-a055-0d8bbf765cf1)
 
 A couple of things to keep in mind are:
