@@ -29,6 +29,7 @@ For this project a couple of things have been used and will be neccesary to be a
 
 ## Setup and restrictions
 The setup is fairly simple, make sure the players can see the screen on which the game will be displayed on. Then place the Kinect in front of the screen and make sure it points towards the players.
+The neccesary SDK for the Kinect can be found [here](https://learn.microsoft.com/en-us/windows/apps/design/devices/kinect-for-windows).
 Footsteps illustrate the players, the screen and Kinect are self explanatory:
 ![afbeelding](https://github.com/NTheuws/ChildrensPlayground/assets/43367956/192e3cff-3de2-4afc-a055-0d8bbf765cf1)
 
@@ -38,7 +39,12 @@ A couple of things to keep in mind are:
 - Make sure to have enough space between the players and the Kinect, 4m is prefered.
 - When using a screen instead of a beamer make sure the screen is of decent size since the game itself is fairly small.
 - It's best to have another wall behind the players or make sure there's no one walked behind them since it'll interfere with the game.
+- Installing the Kinect SDK is a must, if you don't you won't be able to use the input data from the Kinect. 
 
 ## How do I get started?
 #### Editing in Unity
+Download this repo as a zip and unpack it. Afterwards in the Unity hub you can open a project and navigate to wherever you saved it. After opening it you'll be able to start editing the current state of the project.
+
 #### Playing the game
+If you just want to play the game, the build can be downloaded [here](https://www.dropbox.com/s/4w2616tlo5latie/Platformer.zip?dl=0 )
+Do keep in mind you'll need to have the Kinect package installed else it won't be able to detect a single player.
