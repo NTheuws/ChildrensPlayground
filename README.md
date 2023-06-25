@@ -1,5 +1,5 @@
 # Children's Playground
-## Why?
+## Why this project?
 This project was requested by Natlab to Fontys, Open Learning. The issue they were dealing was was as follows: After kids have been watched a movie and their parents/grandparents wanted to sit down and have a drink after. The kids would be too energetic and start running around, annoying other visitors. Something had to be created to entertain the kids so their parents could relax which is why the project "Children's playground". This is a proof of concept of that.
 
 ## What is it?
